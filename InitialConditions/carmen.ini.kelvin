@@ -1,0 +1,40 @@
+// --- Additional variables ---
+
+//corrected in 21/05/2013
+// Anna Karina
+
+
+// --- Initial condition Q[i] in function of (x,y,z) ---
+
+
+// Pi constant
+real PI = 4.0*atan(double(1.0));
+
+// Conservative Variables
+//rho, rho*vx, rho*vy, rho*vz, E, psi, Bx, By, Bz
+
+real rho,E,vx,vy,vz,psi,Bx,By,Bz,p;
+
+rho =  1.0;
+vx  =  5*(tanh(20*(y+0.5))- (tanh(20*(y-0.5)) +1));
+vy  =  0.25*sin(2*PI*x)*(exp(-100*(y+0.5)*(y+0.5)) - exp(-100*(y-0.5)*(y-0.5)));
+vz  =  0.;
+p   =  50.0;
+psi =  0.;
+Bx  =  1.0;
+By  =  0.0;
+Bz  =  0.;
+E   = (p/(Gamma-1.0)) + rho*0.5*(vx*vx + vy*vy + vz*vz) + 0.5*(Bx*Bx + By*By +Bz*Bz);
+
+Q[1] = rho;
+Q[2] = rho*vx;
+Q[3] = rho*vy;
+Q[4] = rho*vz;
+Q[5] = E;
+Q[6] = psi;
+Q[7] = Bx;
+Q[8] = By;
+Q[9] = Bz;
+
+
+

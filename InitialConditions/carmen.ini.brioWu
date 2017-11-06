@@ -1,0 +1,31 @@
+// ...........................................................................................
+// --- Brio and Wu shock tube ---
+
+int xLeft=0;
+int yDown=0;
+
+if (x<=0.5) xLeft=1;
+if (y<=0.5) yDown=1;
+
+double r1 =1.0,      r2=0.125;
+double vx1=0.0,      vx2=0.0;
+double vy1=0.0,      vy2=0.0;
+double vz1=0.0,      vz2=0.0;
+double p1 =1.0,      p2=0.1;
+double by1=1.0,      by2=-1.0;
+double bz1=0.0,      bz2=0.0;
+double psi=0.0;
+E1   = (p1/(Gamma-1.0)) + r1*0.5*(vx1*vx1 + vy1*vy1 + vz1*vz1) + 0.5*(Bx1*Bx1 + By1*By1 +Bz1*Bz1);
+E2   = (p2/(Gamma-1.0)) + r2*0.5*(vx2*vx2 + vy2*vy2 + vz2*vz2) + 0.5*(Bx2*Bx2 + By2*By2 +Bz2*Bz2);
+
+// --- Initial condition Q[i] in function of (x,y,z) ---
+
+Q[1] = (xLeft)?r1:r2;
+Q[2] = (xLeft)?vx1:vx2;
+Q[3] = (xLeft)?vy1:vy2;
+Q[4] = (xLeft)?vz1:vz2;
+Q[5] = (xLeft)?E1:E2;
+Q[6] = (xLeft)?psi:psi;
+Q[7] = 0.75;
+Q[8] = (xLeft)?by1:by2;
+Q[9] = (xLeft)?bz1:bz2;

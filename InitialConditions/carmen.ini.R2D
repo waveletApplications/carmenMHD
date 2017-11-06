@@ -1,0 +1,45 @@
+// --- Additional variables ---
+
+//corrected in 22/06/2012
+//Anna Margarete
+
+
+int xLeft=0;
+int yDown=0;
+
+if (x<=0.0) xLeft=1;
+if (y<=0.0) yDown=1;
+
+//1   , 1.87
+//1.03, 0.93
+
+
+double r1 = 1.0304,    r2 = 1.0,     r3 = 0.9308,    r4 = 1.8887;
+double vx1= 1.5774,    vx2= 1.75,    vx3= 1.4557,    vx4= 0.2334;
+double vy1=-1.0455,    vy2=-1.0,     vy3=-0.4633,    vy4=-1.7422;
+double vz1=-0.1016,    vz2= 0.0,     vz3= 0.0575,    vz4= 0.0733;
+double p1 = 5.7813,    p2 = 6.0,     p3 = 5.0838,    p4 = 12.999;
+double bx1= 0.3501,    bx2= 0.5642,  bx3= 0.3501,    bx4= 0.5642;
+double by1= 0.5078,    by2= 0.5078,  by3= 0.9830,    by4= 0.9830;
+double bz1= 0.1576,    bz2= 0.2539,  bz3= 0.3050,    bz4= 0.4915;
+double psi=0.0;
+
+
+// | x1 | x3 |
+//  ---------
+// | x2 | x4 |
+
+// on the boundary of the blocks we have the average of the data
+
+// --- Initial condition Q[i] in function of (x,y,z) ---
+//                    x1 x2         x3 x4
+
+Q[1] = (xLeft)?(yDown?r2:r1):(yDown?r4:r3);
+Q[2] = (xLeft)?(yDown?vx2:vx1):(yDown?vx4:vx3);
+Q[3] = (xLeft)?(yDown?vy2:vy1):(yDown?vy4:vy3);
+Q[4] = (xLeft)?(yDown?vz2:vz1):(yDown?vz4:vz3);
+Q[5] = (xLeft)?(yDown?p2:p1):(yDown?p4:p3);
+Q[6] = (xLeft)?(yDown?psi:psi):(yDown?psi:psi);
+Q[7] = (xLeft)?(yDown?bx2:bx1):(yDown?bx4:bx3);
+Q[8] = (xLeft)?(yDown?by2:by1):(yDown?by4:by3);
+Q[9] = (xLeft)?(yDown?bz2:bz1):(yDown?bz4:bz3);

@@ -1,0 +1,36 @@
+// --- Additional variables ---
+
+//corrected in 04/02/2013
+// Anna Karina
+
+
+// --- Initial condition Q[i] in function of (x,y,z) ---
+
+// Conservative Variables
+//rho, rho*vx, rho*vy, rho*vz, E, psi, Bx, By, Bz
+
+real rho,E,vx,vy,vz,psi,Bx,By,Bz,p;
+
+rho =  Gamma*Gamma;
+vx  = -sin(y);
+vy  =  sin(x);
+vz  =  0.;
+p   =  Gamma;
+psi =  0.;
+Bx  = -sin(y);
+By  =  sin(2.0*x);
+Bz  =  0.;
+E   = (p/(Gamma-1.0)) + rho*0.5*(vx*vx + vy*vy + vz*vz) + 0.5*(Bx*Bx + By*By +Bz*Bz);
+
+Q[1] = rho;
+Q[2] = rho*vx;
+Q[3] = rho*vy;
+Q[4] = rho*vz;
+Q[5] = E;
+Q[6] = psi;
+Q[7] = Bx;
+Q[8] = By;
+Q[9] = Bz;
+
+
+

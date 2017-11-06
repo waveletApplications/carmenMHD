@@ -1,0 +1,34 @@
+// ...........................................................................................
+// --- Riemann 1D ---
+
+double  auxK1=sqrt(4*pi);
+double  auxK2=sqrt(2*pi);
+
+int xLeft=0;
+int yDown=0;
+
+if (x<=0.5) xLeft=1;
+if (y<=0.5) yDown=1;
+
+double r1 =1.08,      r2=1.0;
+double vx1=1.296,     vx2=0.0;
+double vy1=0.0108,    vy2=0.0;
+double vz1=0.54,      vz2=0.0;
+double p1 =3.330781,  p2=2.614084602;
+double bx1=2.0/auxK1, bx2=2.0/auxK1;
+double by1=3.6/auxK1, by2=4.0/auxK1;
+double bz1=2.0/auxK2, bz2=2.0/auxK2;
+double psi=0.0;
+
+
+// --- Initial condition Q[i] in function of (x,y,z) ---
+
+Q[1] = (xLeft)?r1:r2;
+Q[2] = (xLeft)?vx1:vx2;
+Q[3] = (xLeft)?vy1:vy2;
+Q[4] = (xLeft)?vz1:vz2;
+Q[5] = (xLeft)?p1:p2;
+Q[6] = (xLeft)?psi:psi;
+Q[7] = (xLeft)?bx1:bx2;
+Q[8] = (xLeft)?by1:by2;
+Q[9] = (xLeft)?bz1:bz2;

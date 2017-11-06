@@ -1,0 +1,42 @@
+
+// --- Additional variables ---
+// Magnetic Reconnection
+
+
+int xRight=0;
+int xAbs=0;
+int yIn=0;
+//real eta0=0.01;
+
+if (x>0.05) xRight=1;
+if (x<0.05 && x>-0.05) xAbs=1;
+
+
+double rho=1.0;
+double vx=0., vy=0., vz=0.;
+double pre = 0.1;
+double bx= 0.;
+double by1= -1,    by2=sin(pi*x/0.1),  by3= 1.;
+double bz1= 0.,    bz2=cos(pi*x/0.1),  bz3= 0.;
+double psi=0.0;
+double E1, E2, E3;
+E1  = (pre/(Gamma-1.0)) + 0.5;
+E2  = (pre/(Gamma-1.0)) + 0.5*(by2*by2 +bz2*bz2);
+E3  = (pre/(Gamma-1.0)) + 0.5;
+//double res0= eta0*(cos(pi*x/0.1)+1.)*(cos(pi*y/0.4)+1)/4.;
+//cout<<res0<<endl;
+
+
+Q[1]  = rho;
+Q[2]  = vx;
+Q[3]  = vy;
+Q[4]  = vz;
+Q[5]  = (xRight)?(E3):(xAbs?E2:E1);
+Q[6]  = psi;
+Q[7]  = bx;
+Q[8]  = (xRight)?(by3):(xAbs?by2:by1);
+Q[9]  = (xRight)?(bz3):(xAbs?bz2:bz1);
+
+
+
+
