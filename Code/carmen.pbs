@@ -1,0 +1,8 @@
+#PBS -N euler2D_LL5MRL10
+#PBS -S /bin/bash
+#PBS -l cput=100:01:00
+#PBS -l nodes=1
+#PBS -j oe
+cd $PBS_O_WORKDIR
+ulimit -s2000000
+./carmen

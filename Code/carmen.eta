@@ -1,0 +1,12 @@
+// --- Magnetic Resistivity ---
+// If Resistivity = True, edit this
+
+
+if(fabs(x)<=0.05)
+{
+    if(fabs(y)<=0.2)
+        Res = eta*(cos(pi*x/0.1)+1.)*(cos(pi*y/0.4)+1)/4.;
+}
+else
+    Res = 0.;
+

@@ -1,0 +1,5 @@
+(xLeft)?(yDown?r3:r2):(yDown?r4:r1)
+ (xLeft)?(yDown?rvx3:rvx2):(yDown?rvx4:rvx1)
+(xLeft)?(yDown?rvy3:rvy2):(yDown?rvy4:rvy1)
+(xLeft)?(yDown?re3:re2):(yDown?re4:re1)
+0.

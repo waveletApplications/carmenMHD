@@ -1,0 +1,21 @@
+Dimension             :            2
+Iterations (total)    :          555
+Iterations (elapsed)  :           34
+In progress           :     6.126126 %
+Scales (max)          :            7
+Cells (max)           :        16384
+Solver                :           MR
+Time accuracy order   :            2
+Time step             : 1.077314e-04 s
+Threshold parameter   : 1.000000e-01 
+Threshold norm        :            1
+CFL                   : 3.000000e-01 
+Total physical time   : 5.979095e-02 s
+Elapsed physical time : 3.662869e-03 s
+Leaf compression      :     2.005032 % 
+Memory compression    :    49.083037 % 
+CPU compression       :    55.738440 % 
+
+Total CPU time     (estimation) : 44 s
+Remaining CPU time (estimation) : 41 s
+

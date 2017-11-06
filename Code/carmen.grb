@@ -1,0 +1,22 @@
+//corrected in 15/04/2009
+double gamma=1.4;
+double g= gamma-1; //g=0.4
+
+int xLeft=0;
+int yDown=0;
+
+if (x<0.5) xLeft=1;
+if(y<0.5) yDown=1;
+
+double r1=1.0,    r2=2.0,     r3=1.0,    r4=3.0;
+double vx1=-0.75,    vx2=-0.75,     vx3=0.75,         vx4=0.75;
+double vy1=-0.50,    vy2=0.5,            vy3=0.5,         vy4=-0.5;
+double p1=1.0/gamma,   p2=1.0/gamma,           p3=1.0/gamma,           p4=1.0/gamma;
+
+double rvx1=r1*vx1, rvx2=r2*vx2,  rvx3=r3*vx3,  rvx4=r4*vx4;
+double rvy1=r1*vy1, rvy2=r2*vy2,  rvy3=r3*vy3, rvy4=r4*vy4;
+
+double re1=p1/g+0.5 *r1*(vx1*vx1 +vy1*vy1);
+double re2=p2/g+0.5 *r2*(vx2*vx2 +vy2*vy2);
+double re3=p3/g+0.5 *r3*(vx3*vx3 +vy3*vy3);
+double re4=p4/g+0.5 *r4*(vx4*vx4 +vy4*vy4);
