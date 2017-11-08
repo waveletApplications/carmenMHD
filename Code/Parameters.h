@@ -160,6 +160,7 @@ ________________________________________________________________________________
 	extern real	ConstantForce;		/*!< False = adapt force to maintain constant energy*/
 	extern real     Circulation;		/*!< Circulation parameter*/
 	extern bool     ComputeTemp;
+	
 /*
 ______________________________________________________________________________________________
 
@@ -167,7 +168,6 @@ ________________________________________________________________________________
 ______________________________________________________________________________________________
 
 */
-	extern real 	Alpha; 			/*!< Temperature ratio*/
 	extern real 	Ze;			/*!< Equivalent to Beta*/
 	extern real 	Le;			/*!< Lewis number*/
 	extern real 	Sigma;			/*!< Radiation coefficient*/
@@ -187,7 +187,7 @@ ________________________________________________________________________________
 	extern int	    ErrorNb;			/*!< Number of points for the computation of the mean error*/
 	extern int 	    ErrorGlobalNb;		/*!< Number of points for the computation of the global mean error*/
 
-	extern real     cr;				/*!< Alpha parameter divergence cleaning*/
+	extern real     alpha;				/*!< Alpha parameter divergence cleaning*/
 	extern real     Helicity;			/*!< Time derivative of helicity (must be zero)*/
 	extern real 	GlobalMomentum;			/*!< Global momentum (only for EquationType = 1 or 2)*/
 	extern real 	GlobalEnergy;			/*!< Global energy (only for EquationType = 1 or 2)*/
