@@ -2216,12 +2216,12 @@ void Node::computeCorrection()
 		    }
 
         	ThisCell.setAverage(5, ThisCell.average(5) - TimeStep*PsiGrad);
-        	ThisCell.setAverage(6, ThisCell.average(6)*exp(-(cr*ch*TimeStep/SpaceStep)));
+        	ThisCell.setAverage(6, ThisCell.average(6)*exp(-(alpha*ch*TimeStep/SpaceStep)));
 
         }else if(DivClean==2)//GLM
         {
         	psi = ThisCell.psi();
-        	ThisCell.setAverage(6, psi*exp(-(cr*ch*TimeStep/SpaceStep)));
+        	ThisCell.setAverage(6, psi*exp(-(alpha*ch*TimeStep/SpaceStep)));
         }else if(DivClean==3)
         {
             Bdivergence=0.;
