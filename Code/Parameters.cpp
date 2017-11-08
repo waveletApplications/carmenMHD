@@ -123,11 +123,10 @@ ________________________________________________________________________________
 	bool    ComputeTemp=false;
 	real    eta=0.;
 	real    chi=0.;
+	real	alpha=0.4;
 
 
 // 6) Chemistry -----------------------------------------------------
-
-	real 	Alpha=0.64; 		// Temperature ratio		(only for EquationType = 3, 4 or 5)
 	real 	Ze=10.;			// Zeldovic number  		(only for EquationType = 3, 4 or 5)
 	real 	Le=1.;			// Lewis number      		(only for EquationType = 3, 4 or 5)
 	real 	Sigma=5.E-02;		// Radiation coefficient	(only for EquationType = 3, 4 or 5)
