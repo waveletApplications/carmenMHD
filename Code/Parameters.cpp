@@ -123,7 +123,6 @@ ________________________________________________________________________________
 	bool    ComputeTemp=false;
 	real    eta=0.;
 	real    chi=0.;
-	real	alpha=0.4;
 
 
 // 6) Chemistry -----------------------------------------------------
@@ -191,7 +190,7 @@ ________________________________________________________________________________
 	real	RKFAccuracyFactor=1.E-03;	// Desired value of RKFError (only if ConstantTimeStep=false)
 	real	RKFSafetyFactor=0.01;		// Safety factor for the computation of the time step (only if ConstantTimeStep=false)
 
-    real    cr=0.;
+    real    alpha=0.;
     real    Helicity =0.;
 	real  	GlobalMomentum=0.;		// Global momentum
 	real  	GlobalEnergy=0.;		// Global energy
