@@ -1,6 +1,0 @@
-<map id="FineMesh::writeTimeAverage" name="FineMesh::writeTimeAverage">
-<area shape="rect" id="node2" href="$View_8cpp.html#a7cbdf0a2f1472a17ef6ecfc36d979ca3" title="Writes the current cel–averages of the fine mesh Root into file AverageFileName. Only for finite volu..." alt="" coords="245,56,296,83"/>
-<area shape="rect" id="node3" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="368,5,419,32"/>
-<area shape="rect" id="node4" href="$ViewEvery_8cpp.html#a199e1df3dc70664833da4c72b0fca70a" title="Writes into file the data of the tree structure at iteration arg. The output file names are AverageNN..." alt="" coords="351,56,436,83"/>
-<area shape="rect" id="node5" href="$ViewIteration_8cpp.html#a3bd55480bfdad374ee84bd384499fe87" title="Writes into file the data of the tree structure from physical time PrintTime1 to physical time PrintT..." alt="" coords="344,107,443,133"/>
-</map>

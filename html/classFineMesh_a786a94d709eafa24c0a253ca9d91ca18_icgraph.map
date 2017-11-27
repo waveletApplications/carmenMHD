@@ -1,7 +1,0 @@
-<map id="FineMesh::computeCorrection_cell" name="FineMesh::computeCorrection_cell">
-<area shape="rect" id="node2" href="$classFineMesh.html#a530c25bdeafa3de83e8a1f58ed58d8ad" title="Computes divergence cleaning source term (only for MHD). " alt="" coords="277,31,475,57"/>
-<area shape="rect" id="node3" href="$TimeEvolution_8cpp.html#a0b2a323a69a8acec9f7aff4153be2adb" title="Computes a time evolution on the regular fine mesh Root. Only for finite volume computations. " alt="" coords="523,31,629,57"/>
-<area shape="rect" id="node4" href="$CPUTimeRef_8cpp.html#a83670ff3267f963d540f5b8f193f99ec" title="Returns the time required by a finite volume computation using iterations iterations and scales scale..." alt="" coords="677,5,779,32"/>
-<area shape="rect" id="node6" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="971,31,1021,57"/>
-<area shape="rect" id="node5" href="$InitTimeStep_8cpp.html#a3c31c20c15946994e3f9f6135a82a0fc" title="Inits time step and all the parameters which depend on it. " alt="" coords="827,5,923,32"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="Cell::setAverageZero" name="Cell::setAverageZero">
-<area shape="rect" id="node2" href="$classFineMesh.html#a498f878cccc7401230842abf744de7be" title="Constructor of FineMesh class Generates a regular fine mesh containing 2**(Dimension*ScaleNb) cells..." alt="" coords="200,5,344,32"/>
-<area shape="rect" id="node3" href="$classNode.html#a02c3fbe69c1f1b255d500e20a0979ebc" title="Computes the initial value. " alt="" coords="217,56,327,83"/>
-<area shape="rect" id="node6" href="$classNode.html#a1ca2624ea9fa4365f0d0729e1ef06f50" title="Computes the cell&#45;average values of all nodes that are not leaves by projection from the cell&#45;average..." alt="" coords="222,131,322,157"/>
-<area shape="rect" id="node4" href="$InitTree_8cpp.html#a8e0dd745f7d72aa49a60f4af4d5d569b" title="Inits tree structure from initial condition, starting form the node Root. Only for multiresolution co..." alt="" coords="407,60,473,87"/>
-<area shape="rect" id="node5" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="564,65,615,92"/>
-<area shape="rect" id="node7" href="$RefreshTree_8cpp.html#a0f73a18e7fc618dfe2987003ccd32195" title="Refresh the tree structure, i.e. compute the cell&#45;averages of the internal nodes by projection and th..." alt="" coords="393,119,487,145"/>
-<area shape="rect" id="node8" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="537,119,642,145"/>
-</map>

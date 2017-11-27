@@ -1,5 +1,0 @@
-<map id="Cell::average" name="Cell::average">
-<area shape="rect" id="node2" href="$classCell.html#a5d99304305760a1dd676c77b18b66dfa" title="Return true if one of the cell&#45;average quantities is greater than the maximum. This usually means the..." alt="" coords="152,5,267,32"/>
-<area shape="rect" id="node3" href="$classNode.html#a2dcb9c66c923d579dc150a18e028da67" title="Checks if the computation is numerically unstable, i.e. if one of the cell&#45;averages is overflow..." alt="" coords="315,5,458,32"/>
-<area shape="rect" id="node4" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="507,5,613,32"/>
-</map>

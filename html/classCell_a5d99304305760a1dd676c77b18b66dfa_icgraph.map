@@ -1,4 +1,0 @@
-<map id="Cell::isOverflow" name="Cell::isOverflow">
-<area shape="rect" id="node2" href="$classNode.html#a2dcb9c66c923d579dc150a18e028da67" title="Checks if the computation is numerically unstable, i.e. if one of the cell&#45;averages is overflow..." alt="" coords="169,5,311,32"/>
-<area shape="rect" id="node3" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="361,5,466,32"/>
-</map>

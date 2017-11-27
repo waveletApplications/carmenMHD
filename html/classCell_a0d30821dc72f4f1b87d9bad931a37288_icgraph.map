@@ -1,5 +1,0 @@
-<map id="Cell::size" name="Cell::size">
-<area shape="rect" id="node2" href="$classCell.html#a34f05f63e09810ff019b0fc7fdce542e" title="Returns the volume of the cell (length in 1D, area in 2D, volume in 3D). " alt="" coords="161,5,255,32"/>
-<area shape="rect" id="node3" href="$classCell.html#a2c9250c343bd42d831dfe023b01cf7ce" title="Returns true if the cell is inside the boundary. " alt="" coords="131,56,285,83"/>
-<area shape="rect" id="node4" href="$classCell.html#a910ebec065cb047823603cafbfe09af6" title="Returns true if the cell is inside the fluid. " alt="" coords="334,56,437,83"/>
-</map>

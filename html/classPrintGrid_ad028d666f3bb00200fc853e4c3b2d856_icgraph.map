@@ -1,6 +1,0 @@
-<map id="PrintGrid::energy" name="PrintGrid::energy">
-<area shape="rect" id="node2" href="$classNode.html#a19ada573ff6dd50d01dd6b049c469a2f" title="Writes cell&#45;average values on a regular grid of level L into file FileName. " alt="" coords="359,5,497,32"/>
-<area shape="rect" id="node4" href="$classPrintGrid.html#ab8333d2ab826b53f8a77180a9601ba46" title="Returns the cell&#45;average pressure located at i, j, k. " alt="" coords="173,56,304,83"/>
-<area shape="rect" id="node3" href="$View_8cpp.html#a7ccf9161651e810d976afeb98e1130fc" title="Writes the data of the tree structure into files TreeFileName (tree structure), MeshFileName (mesh) a..." alt="" coords="552,5,603,32"/>
-<area shape="rect" id="node5" href="$classPrintGrid.html#a919f698679a2497daa145700eb1e103b" title="Returns the cell&#45;average temperature located at i, j, k. " alt="" coords="353,56,503,83"/>
-</map>

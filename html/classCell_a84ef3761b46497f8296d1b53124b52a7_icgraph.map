@@ -1,5 +1,0 @@
-<map id="Cell::setCenter" name="Cell::setCenter">
-<area shape="rect" id="node2" href="$classCell.html#ac9857b7405bb1996d9b6cdb3aa8bf427" title="Defines the cell operators. It is possible to obtain the cell values as: " alt="" coords="183,5,291,32"/>
-<area shape="rect" id="node3" href="$classFineMesh.html#a498f878cccc7401230842abf744de7be" title="Constructor of FineMesh class Generates a regular fine mesh containing 2**(Dimension*ScaleNb) cells..." alt="" coords="165,56,309,83"/>
-<area shape="rect" id="node4" href="$classNode.html#a5a0373de96b8f4b4e041edbdfa2eba36" title="Constructor of Node class. Generates a new node at the position (l, i, j, k) in the tree structure..." alt="" coords="191,107,283,133"/>
-</map>

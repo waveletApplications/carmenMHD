@@ -1,8 +1,0 @@
-<map id="TimeAverageGrid::density" name="TimeAverageGrid::density">
-<area shape="rect" id="node2" href="$classTimeAverageGrid.html#a76a4c6ee686e077040bd8f30ac92067e" title="TimeAverageGrid::stress" alt="" coords="227,56,394,83"/>
-<area shape="rect" id="node3" href="$classFineMesh.html#a11719491741154691a54463296d4b855" title="Write time&#45;averages into file FileName. " alt="" coords="443,56,635,83"/>
-<area shape="rect" id="node4" href="$View_8cpp.html#a7cbdf0a2f1472a17ef6ecfc36d979ca3" title="Writes the current cel–averages of the fine mesh Root into file AverageFileName. Only for finite volu..." alt="" coords="683,56,733,83"/>
-<area shape="rect" id="node5" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="805,5,856,32"/>
-<area shape="rect" id="node6" href="$ViewEvery_8cpp.html#a199e1df3dc70664833da4c72b0fca70a" title="Writes into file the data of the tree structure at iteration arg. The output file names are AverageNN..." alt="" coords="788,56,873,83"/>
-<area shape="rect" id="node7" href="$ViewIteration_8cpp.html#a3bd55480bfdad374ee84bd384499fe87" title="Writes into file the data of the tree structure from physical time PrintTime1 to physical time PrintT..." alt="" coords="781,107,880,133"/>
-</map>
