@@ -345,6 +345,14 @@ void combine();
 Vector 	predict() const;
 
 /**
+ * @brief Returns the cell resistivity value of the current node predicted from the parent node and its nearest neigbours (uncles)
+ *
+ * @return real
+ */
+real 	predictRes() const;
+
+
+/**
  * @brief Returns the temporary cell-average value of the current node predicted from the parent node and its nearest neigbours (uncles).
  * Only for time adaptivity.
  * 
