@@ -651,7 +651,6 @@ void Node::fillVirtualChildren()
 		case 3:
 			ThisCell.setAverage(predict());
 			//ThisCell.setRes(predictRes());
-			if(ThisCell.Res != 0.02)cout << ThisCell.Res ;
 			if (EquationType==6) ThisCell.setGradient(parentCell()->gradient());
 			break;
 
