@@ -306,8 +306,11 @@ void Node::split(const bool init)
 				// Compute value of children (if init, computed from initial condition, else predicted)
 				if (init)
 					Child[n]->initValue();
-				else
-					Child[n]->ThisCell.setAverage(Child[n]->predict());
+				else{
+                    Child[n]->ThisCell.setAverage(Child[n]->predict());
+                    //Child[n]->ThisCell.setRes(Child[n]->predictRes());
+				}
+
 			}
 
 			break;
@@ -605,6 +608,7 @@ void Node::makeVirtualChildren(bool init)
 			else
 			{
 				Child[n]->ThisCell.setAverage(Child[n]->predict());
+				//Child[n]->ThisCell.setRes(Child[n]->predictRes());
 
 				// If time adaptivity, predict also temporary cell-average values
 				if (TimeAdaptivity && !init)
@@ -646,6 +650,8 @@ void Node::fillVirtualChildren()
 		// If node is a virtual leaf, compute value with prediction
 		case 3:
 			ThisCell.setAverage(predict());
+			//ThisCell.setRes(predictRes());
+			if(ThisCell.Res != 0.02)cout << ThisCell.Res ;
 			if (EquationType==6) ThisCell.setGradient(parentCell()->gradient());
 			break;
 
@@ -805,6 +811,77 @@ Vector Node::predict() const
 
 	return Result;
 }
+
+/*
+______________________________________________________________________________________________
+
+	predict the cell-average values with a linear interpolation
+______________________________________________________________________________________________
+
+*/
+real Node::predictRes() const
+{
+	// --- Local variables ---
+
+	int pi, pj=1, pk=1;	// Parity of Ni, Nj, Nk
+
+	real	Result;
+
+	// --- Init result with the cell resistivity value of the father ---
+
+	Result = parentCell()->Res;
+
+	// --- 1D case ---
+
+	pi = (Ni%2 == 0)?1:-1;
+	Result += (pi*-.125) * uncleCell(1,0,0)->Res;
+	Result -= (pi*-.125) * uncleCell(-1,0,0)->Res;
+
+	// --- 2D case ---
+
+ 	if (Dimension > 1)
+	{
+		pj = (Nj%2 == 0)?1:-1;
+		Result += (pj*-.125) * uncleCell(0,1,0)->Res;
+		Result -= (pj*-.125) * uncleCell(0,-1,0)->Res;
+
+		Result += (pi*pj*.015625) * uncleCell(1,1,0)->Res;
+		Result -= (pi*pj*.015625) * uncleCell(1,-1,0)->Res;
+		Result -= (pi*pj*.015625) * uncleCell(-1,1,0)->Res;
+		Result += (pi*pj*.015625) * uncleCell(-1,-1,0)->Res;
+  }
+
+	// --- 3D case ---
+
+ 	if (Dimension > 2)
+	{
+		pk = (Nk%2 == 0)?1:-1;
+		Result += (pk*-.125) * uncleCell(0,0,1)->Res;
+		Result -= (pk*-.125) * uncleCell(0,0,-1)->Res;
+
+		Result += (pi*pk*.015625) * uncleCell(1,0,1)->Res;
+		Result -= (pi*pk*.015625) * uncleCell(1,0,-1)->Res;
+		Result -= (pi*pk*.015625) * uncleCell(-1,0,1)->Res;
+		Result += (pi*pk*.015625) * uncleCell(-1,0,-1)->Res;
+
+		Result += (pj*pk*.015625) * uncleCell(0,1,1)->Res;
+		Result -= (pj*pk*.015625) * uncleCell(0,1,-1)->Res;
+		Result -= (pj*pk*.015625) * uncleCell(0,-1,1)->Res;
+		Result += (pj*pk*.015625) * uncleCell(0,-1,-1)->Res;
+
+		Result += (pi*pj*pk*-.001953125) * uncleCell(1,1,1)->Res;
+		Result -= (pi*pj*pk*-.001953125) * uncleCell(1,1,-1)->Res;
+		Result -= (pi*pj*pk*-.001953125) * uncleCell(1,-1,1)->Res;
+		Result += (pi*pj*pk*-.001953125) * uncleCell(1,-1,-1)->Res;
+		Result -= (pi*pj*pk*-.001953125) * uncleCell(-1,1,1)->Res;
+		Result += (pi*pj*pk*-.001953125) * uncleCell(-1,1,-1)->Res;
+		Result += (pi*pj*pk*-.001953125) * uncleCell(-1,-1,1)->Res;
+		Result -= (pi*pj*pk*-.001953125) * uncleCell(-1,-1,-1)->Res;
+  }
+
+	return Result;
+}
+
 /*
 ______________________________________________________________________________________________
 
@@ -1994,55 +2071,108 @@ void Node::computeDivergence()
 		// --- Add flux in x-direction ---------------------------------------------------------
 
 		// If the cell is a leaf with virtual children and its left cousin is a node, compute flux on upper level
+        if(Resistivity){
 
-		if (isLeafWithVirtualChildren() && node(Nl, Ni-1, Nj, Nk) != 0 && node(Nl, Ni-1, Nj, Nk)->isInternalNode() && FluxCorrection)
-		{
-			FluxIn  = Flux( *childCell(-2,0,0), *childCell(-1,0,0), *childCell(0,0,0) , *childCell(1,0,0), 1 );
+            if (isLeafWithVirtualChildren() && node(Nl, Ni-1, Nj, Nk) != 0 && node(Nl, Ni-1, Nj, Nk)->isInternalNode() && FluxCorrection)
+            {
+                FluxIn  = Flux( *childCell(-2,0,0), *childCell(-1,0,0), *childCell(0,0,0) , *childCell(1,0,0), 1 )
+                        - ResistiveTerms(*childCell(0,0,0),*childCell(-1,0,0),*childCell(0,-1,0),*childCell(0,0,-1),1);
 
-			if (Dimension > 1)
-				FluxIn += Flux( *childCell(-2,1,0), *childCell(-1,1,0), *childCell(0,1,0), *childCell(1,1,0), 1 );
+                if (Dimension > 1)
+                    FluxIn += Flux( *childCell(-2,1,0), *childCell(-1,1,0), *childCell(0,1,0), *childCell(1,1,0), 1 )
+                           - ResistiveTerms(*childCell(0,1,0),*childCell(-1,1,0),*childCell(0,0,0),*childCell(0,1,-1),1);
 
-			if (Dimension > 2)
-			{
-				FluxIn += Flux( *childCell(-2,0,1), *childCell(-1,0,1), *childCell(0,0,1), *childCell(1,0,1), 1 );
-				FluxIn += Flux( *childCell(-2,1,1), *childCell(-1,1,1), *childCell(0,1,1), *childCell(1,1,1), 1 );
+                if (Dimension > 2)
+                {
+                    FluxIn += Flux( *childCell(-2,0,1), *childCell(-1,0,1), *childCell(0,0,1), *childCell(1,0,1), 1 )
+                            - ResistiveTerms(*childCell(0,0,1),*childCell(-1,0,1),*childCell(0,-1,1),*childCell(0,0,0),1);
+                    FluxIn += Flux( *childCell(-2,1,1), *childCell(-1,1,1), *childCell(0,1,1), *childCell(1,1,1), 1 )
+                            - ResistiveTerms(*childCell(0,1,1),*childCell(-1,1,1),*childCell(0,0,1),*childCell(0,1,0),1);
+                    }
+
+                // Average flux
+                FluxIn *= 1./(1<<(Dimension-1));
+
+                }
+            else
+                FluxIn  = Flux( *cousinCell(-2,0,0), *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), 1 )
+                        - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 1);
+
+            divCor = -auxvar;
+            // If the cell is a leaf with virtual children and its right cousin is a node, compute flux on upper level
+
+            if (isLeafWithVirtualChildren() && node(Nl, Ni+1, Nj, Nk) != 0 && node(Nl, Ni+1, Nj, Nk)->isInternalNode() && FluxCorrection)
+            {
+                FluxOut  = Flux( *childCell(0,0,0), *childCell(1,0,0), *childCell(2,0,0), *childCell(3,0,0), 1 )
+                         - ResistiveTerms(*childCell(2,0,0),*childCell(1,0,0),*childCell(2,-1,0),*childCell(2,0,-1),1);
+
+                if (Dimension > 1)
+                    FluxOut += Flux( *childCell(0,1,0), *childCell(1,1,0), *childCell(2,1,0), *childCell(3,1,0), 1 )
+                             - ResistiveTerms(*childCell(2,1,0),*childCell(1,1,0),*childCell(2,0,0),*childCell(2,1,-1),1);
+
+                if (Dimension > 2)
+                {
+                    FluxOut += Flux( *childCell(0,0,1), *childCell(1,0,1), *childCell(2,0,1), *childCell(3,0,1), 1 )
+                             - ResistiveTerms(*childCell(2,0,1),*childCell(1,0,1),*childCell(2,-1,1),*childCell(2,0,0),1);
+                    FluxOut += Flux( *childCell(0,1,1), *childCell(1,1,1), *childCell(2,1,1), *childCell(3,1,1), 1 )
+                             - ResistiveTerms(*childCell(2,1,1),*childCell(1,1,1),*childCell(2,0,1),*childCell(2,1,0),1);
+                    }
+
+                // Average flux
+                FluxOut *= 1./(1<<(Dimension-1));
+
+                }
+            else
+                FluxOut = Flux( *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), *cousinCell(2,0,0), 1 )
+                        - ResistiveTerms(*cousinCell(1,0,0), ThisCell , *cousinCell(1,-1,0), *cousinCell(1,0,-1), 1);
+
+            divCor += auxvar;
+
+        }else{
+
+            if (isLeafWithVirtualChildren() && node(Nl, Ni-1, Nj, Nk) != 0 && node(Nl, Ni-1, Nj, Nk)->isInternalNode() && FluxCorrection)
+            {
+                FluxIn  = Flux( *childCell(-2,0,0), *childCell(-1,0,0), *childCell(0,0,0) , *childCell(1,0,0), 1 );
+
+                if (Dimension > 1)
+                    FluxIn += Flux( *childCell(-2,1,0), *childCell(-1,1,0), *childCell(0,1,0), *childCell(1,1,0), 1 );
+
+                if (Dimension > 2)
+                {
+                    FluxIn += Flux( *childCell(-2,0,1), *childCell(-1,0,1), *childCell(0,0,1), *childCell(1,0,1), 1 );
+                    FluxIn += Flux( *childCell(-2,1,1), *childCell(-1,1,1), *childCell(0,1,1), *childCell(1,1,1), 1 );
         		}
 
 			// Average flux
-			FluxIn *= 1./(1<<(Dimension-1));
+                FluxIn *= 1./(1<<(Dimension-1));
 
-      		}
-		else
-			FluxIn  = Flux( *cousinCell(-2,0,0), *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), 1 );
+      		}else
+                FluxIn  = Flux( *cousinCell(-2,0,0), *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), 1 );
 
-        divCor = -auxvar;
+            divCor = -auxvar;
 		// If the cell is a leaf with virtual children and its right cousin is a node, compute flux on upper level
 
-		if (isLeafWithVirtualChildren() && node(Nl, Ni+1, Nj, Nk) != 0 && node(Nl, Ni+1, Nj, Nk)->isInternalNode() && FluxCorrection)
-		{
-			FluxOut  = Flux( *childCell(0,0,0), *childCell(1,0,0), *childCell(2,0,0), *childCell(3,0,0), 1 );
+            if (isLeafWithVirtualChildren() && node(Nl, Ni+1, Nj, Nk) != 0 && node(Nl, Ni+1, Nj, Nk)->isInternalNode() && FluxCorrection)
+            {
+                FluxOut  = Flux( *childCell(0,0,0), *childCell(1,0,0), *childCell(2,0,0), *childCell(3,0,0), 1 );
 
-			if (Dimension > 1)
-				FluxOut += Flux( *childCell(0,1,0), *childCell(1,1,0), *childCell(2,1,0), *childCell(3,1,0), 1 );
+                if (Dimension > 1)
+                    FluxOut += Flux( *childCell(0,1,0), *childCell(1,1,0), *childCell(2,1,0), *childCell(3,1,0), 1 );
 
-			if (Dimension > 2)
-			{
-				FluxOut += Flux( *childCell(0,0,1), *childCell(1,0,1), *childCell(2,0,1), *childCell(3,0,1), 1 );
-				FluxOut += Flux( *childCell(0,1,1), *childCell(1,1,1), *childCell(2,1,1), *childCell(3,1,1), 1 );
-        		}
+                if (Dimension > 2)
+                {
+                    FluxOut += Flux( *childCell(0,0,1), *childCell(1,0,1), *childCell(2,0,1), *childCell(3,0,1), 1 );
+                    FluxOut += Flux( *childCell(0,1,1), *childCell(1,1,1), *childCell(2,1,1), *childCell(3,1,1), 1 );
+                }
 
-			// Average flux
-			FluxOut *= 1./(1<<(Dimension-1));
+                // Average flux
+                FluxOut *= 1./(1<<(Dimension-1));
 
-     		}
-		else
-			FluxOut = Flux( *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), *cousinCell(2,0,0), 1 );
+            }else
+                FluxOut = Flux( *cousinCell(-1,0,0), ThisCell, *cousinCell(1,0,0), *cousinCell(2,0,0), 1 );
 
-        divCor += auxvar;
-        //! 2D resistive part of the model added to the Flux
-        if(Resistivity){
-            FluxIn  = FluxIn  - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 1);
-            FluxOut = FluxOut - ResistiveTerms(*cousinCell(1,0,0), ThisCell , *cousinCell(1,-1,0), *cousinCell(1,0,-1), 1);
+            divCor += auxvar;
+
         }
 
         // Add divergence in x-direction
@@ -2057,51 +2187,97 @@ void Node::computeDivergence()
 		if (Dimension > 1)
 		{
 			// If the cell is a leaf with virtual children and its front cousin is a node, compute flux on upper level
-
-			if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj-1, Nk) != 0 && node(Nl, Ni, Nj-1, Nk)->isInternalNode() && FluxCorrection)
-			{
-				FluxIn  = Flux( *childCell(0,-2,0), *childCell(0,-1,0), *childCell(0,0,0), *childCell(0,1,0), 2 );
-				FluxIn += Flux( *childCell(1,-2,0), *childCell(1,-1,0), *childCell(1,0,0) , *childCell(1,1,0), 2 );
-
-				if (Dimension > 2)
-				{
-					FluxIn += Flux( *childCell(0,-2,1), *childCell(0,-1,1), *childCell(0,0,1), *childCell(0,1,1), 2 );
-					FluxIn += Flux( *childCell(1,-2,1), *childCell(1,-1,1), *childCell(1,0,1), *childCell(1,1,1), 2 );
-        			}
-
-				// Average flux
-				FluxIn *= 1./(1<<(Dimension-1));
-
-      			}
-			else
-				FluxIn = Flux( *cousinCell(0,-2,0), *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), 2 );
-
-            divCor = -auxvar;
-			// If the cell is a leaf with virtual children and its back cousin is a node, compute flux on upper level
-
-			if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj+1, Nk) != 0 && node(Nl, Ni, Nj+1, Nk)->isInternalNode() && FluxCorrection)
-			{
-				FluxOut  = Flux( *childCell(0,0,0), *childCell(0,1,0), *childCell(0,2,0), *childCell(0,3,0), 2 );
-				FluxOut += Flux( *childCell(1,0,0), *childCell(1,1,0), *childCell(1,2,0), *childCell(1,3,0), 2 );
-
-				if (Dimension > 2)
-				{
-					FluxOut += Flux( *childCell(0,0,1), *childCell(0,1,1), *childCell(0,2,1), *childCell(0,3,1), 2 );
-					FluxOut += Flux( *childCell(1,0,1), *childCell(1,1,1), *childCell(1,2,1), *childCell(1,3,1), 2 );
-        			}
-
-				// Average flux
-				FluxOut *= 1./(1<<(Dimension-1));
-
-      			}
-			else
-				FluxOut = Flux( *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), *cousinCell(0,2,0), 2 );
-
-            divCor += auxvar;
-
             if(Resistivity){
-                FluxIn  = FluxIn  - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 2);
-                FluxOut = FluxOut - ResistiveTerms(*cousinCell(0,1,0), *cousinCell(-1,1,0), ThisCell , *cousinCell(0,1,-1), 2);
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj-1, Nk) != 0 && node(Nl, Ni, Nj-1, Nk)->isInternalNode() && FluxCorrection)
+                {
+                    FluxIn  = Flux( *childCell(0,-2,0), *childCell(0,-1,0), *childCell(0,0,0), *childCell(0,1,0), 2 )
+                            - ResistiveTerms(*childCell(0,0,0),*childCell(-1,0,0),*childCell(0,-1,0),*childCell(0,0,-1),2);
+                    FluxIn += Flux( *childCell(1,-2,0), *childCell(1,-1,0), *childCell(1,0,0) , *childCell(1,1,0), 2 )
+                            - ResistiveTerms(*childCell(1,0,0),*childCell(0,0,0),*childCell(1,-1,0),*childCell(1,0,-1),2);
+
+                    if (Dimension > 2)
+                    {
+                        FluxIn += Flux( *childCell(0,-2,1), *childCell(0,-1,1), *childCell(0,0,1), *childCell(0,1,1), 2 )
+                                - ResistiveTerms(*childCell(0,0,1),*childCell(-1,0,1),*childCell(0,-1,1),*childCell(0,0,0),2);
+                        FluxIn += Flux( *childCell(1,-2,1), *childCell(1,-1,1), *childCell(1,0,1), *childCell(1,1,1), 2 )
+                                - ResistiveTerms(*childCell(1,0,1),*childCell(0,0,1),*childCell(1,-1,1),*childCell(1,0,0),2);
+                    }
+
+                    // Average flux
+                    FluxIn *= 1./(1<<(Dimension-1));
+
+                }else
+                    FluxIn = Flux( *cousinCell(0,-2,0), *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), 2 )
+                           - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 2);
+
+                divCor = -auxvar;
+                // If the cell is a leaf with virtual children and its back cousin is a node, compute flux on upper level
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj+1, Nk) != 0 && node(Nl, Ni, Nj+1, Nk)->isInternalNode() && FluxCorrection)
+                {
+                    FluxOut  = Flux( *childCell(0,0,0), *childCell(0,1,0), *childCell(0,2,0), *childCell(0,3,0), 2 )
+                             - ResistiveTerms(*childCell(0,2,0),*childCell(-1,2,0),*childCell(0,1,0),*childCell(0,2,-1),2);
+                    FluxOut += Flux( *childCell(1,0,0), *childCell(1,1,0), *childCell(1,2,0), *childCell(1,3,0), 2 )
+                             - ResistiveTerms(*childCell(1,2,0),*childCell(0,2,0),*childCell(1,1,0),*childCell(1,2,-1),2);
+
+                    if (Dimension > 2)
+                    {
+                        FluxOut += Flux( *childCell(0,0,1), *childCell(0,1,1), *childCell(0,2,1), *childCell(0,3,1), 2 )
+                                 - ResistiveTerms(*childCell(0,2,1),*childCell(-1,2,1),*childCell(0,1,1),*childCell(0,2,0),2);
+                        FluxOut += Flux( *childCell(1,0,1), *childCell(1,1,1), *childCell(1,2,1), *childCell(1,3,1), 2 )
+                                 - ResistiveTerms(*childCell(1,2,1),*childCell(0,2,1),*childCell(1,1,1),*childCell(1,2,0),2);
+                    }
+
+                    // Average flux
+                    FluxOut *= 1./(1<<(Dimension-1));
+
+                }else
+                    FluxOut = Flux( *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), *cousinCell(0,2,0), 2 )
+                            - ResistiveTerms(*cousinCell(0,1,0), *cousinCell(-1,1,0), ThisCell , *cousinCell(0,1,-1), 2);
+
+                divCor += auxvar;
+
+            }else{
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj-1, Nk) != 0 && node(Nl, Ni, Nj-1, Nk)->isInternalNode() && FluxCorrection)
+                {
+                    FluxIn  = Flux( *childCell(0,-2,0), *childCell(0,-1,0), *childCell(0,0,0), *childCell(0,1,0), 2 );
+                    FluxIn += Flux( *childCell(1,-2,0), *childCell(1,-1,0), *childCell(1,0,0) , *childCell(1,1,0), 2 );
+
+                    if (Dimension > 2)
+                    {
+                        FluxIn += Flux( *childCell(0,-2,1), *childCell(0,-1,1), *childCell(0,0,1), *childCell(0,1,1), 2 );
+                        FluxIn += Flux( *childCell(1,-2,1), *childCell(1,-1,1), *childCell(1,0,1), *childCell(1,1,1), 2 );
+                        }
+
+                    // Average flux
+                    FluxIn *= 1./(1<<(Dimension-1));
+
+                }else
+                    FluxIn = Flux( *cousinCell(0,-2,0), *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), 2 );
+
+                divCor = -auxvar;
+                // If the cell is a leaf with virtual children and its back cousin is a node, compute flux on upper level
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj+1, Nk) != 0 && node(Nl, Ni, Nj+1, Nk)->isInternalNode() && FluxCorrection)
+                {
+                    FluxOut  = Flux( *childCell(0,0,0), *childCell(0,1,0), *childCell(0,2,0), *childCell(0,3,0), 2 );
+                    FluxOut += Flux( *childCell(1,0,0), *childCell(1,1,0), *childCell(1,2,0), *childCell(1,3,0), 2 );
+
+                    if (Dimension > 2)
+                    {
+                        FluxOut += Flux( *childCell(0,0,1), *childCell(0,1,1), *childCell(0,2,1), *childCell(0,3,1), 2 );
+                        FluxOut += Flux( *childCell(1,0,1), *childCell(1,1,1), *childCell(1,2,1), *childCell(1,3,1), 2 );
+                        }
+
+                    // Average flux
+                    FluxOut *= 1./(1<<(Dimension-1));
+
+                }else
+                    FluxOut = Flux( *cousinCell(0,-1,0), ThisCell, *cousinCell(0,1,0), *cousinCell(0,2,0), 2 );
+
+                divCor += auxvar;
+
             }
 
 			// Add divergence in y-direction
@@ -2120,46 +2296,84 @@ void Node::computeDivergence()
 		if (Dimension > 2)
 		{
 			// If the cell is a leaf with virtual children and its lower cousin is a node, compute flux on upper level
-
-			if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk-1) != 0 && node(Nl, Ni, Nj, Nk-1)->isInternalNode() && FluxCorrection)
-			{
-				FluxIn  = Flux( *childCell(0,0,-2), *childCell(0,0,-1), *childCell(0,0,0), *childCell(0,0,1), 3 );
-				FluxIn += Flux( *childCell(1,0,-2), *childCell(1,0,-1), *childCell(1,0,0), *childCell(1,0,1), 3 );
-				FluxIn += Flux( *childCell(0,1,-2), *childCell(0,1,-1), *childCell(0,1,0), *childCell(0,1,1), 3 );
-				FluxIn += Flux( *childCell(1,1,-2), *childCell(1,1,-1), *childCell(1,1,0), *childCell(1,1,1), 3 );
-
-				// Average flux
-				FluxIn *= 0.25;
-
-      			}
-			else
-				FluxIn  = Flux( *cousinCell(0,0,-2), *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), 3 );
-
-            divCor = -auxvar;
-
-			// If the cell is a leaf with virtual children and its upper cousin is a node, compute flux on upper level
-
-			if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk+1) != 0 && node(Nl, Ni, Nj, Nk+1)->isInternalNode() && FluxCorrection)
-			{
-				FluxOut  = Flux( *childCell(0,0,0), *childCell(0,0,1), *childCell(0,0,2), *childCell(0,0,3), 3 );
-				FluxOut += Flux( *childCell(1,0,0), *childCell(1,0,1), *childCell(1,0,2), *childCell(1,0,3), 3 );
-				FluxOut += Flux( *childCell(0,1,0), *childCell(0,1,1), *childCell(0,1,2), *childCell(0,1,3), 3 );
-				FluxOut += Flux( *childCell(1,1,0), *childCell(1,1,1), *childCell(1,1,2), *childCell(1,1,3), 3 );
-
-				// Average flux
-				FluxOut *= 0.25;
-
-      			}
-			else
-				FluxOut = Flux( *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), *cousinCell(0,0,2), 3 );
-
-            divCor += auxvar;
-
             if(Resistivity){
-                FluxIn  = FluxIn  - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 3);
-                FluxOut = FluxOut - ResistiveTerms(*cousinCell(0,0,1), *cousinCell(-1,0,1), *cousinCell(0,-1,1), ThisCell , 3);
-            }
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk-1) != 0 && node(Nl, Ni, Nj, Nk-1)->isInternalNode() && FluxCorrection)
+                {
+                    FluxIn  = Flux( *childCell(0,0,-2), *childCell(0,0,-1), *childCell(0,0,0), *childCell(0,0,1), 3 )
+                            - ResistiveTerms(*childCell(0,0,0),*childCell(-1,0,0),*childCell(0,-1,0),*childCell(0,0,-1),3);
+                    FluxIn += Flux( *childCell(1,0,-2), *childCell(1,0,-1), *childCell(1,0,0), *childCell(1,0,1), 3 )
+                            - ResistiveTerms(*childCell(1,0,0),*childCell(0,0,0),*childCell(1,-1,0),*childCell(1,0,-1),3);
+                    FluxIn += Flux( *childCell(0,1,-2), *childCell(0,1,-1), *childCell(0,1,0), *childCell(0,1,1), 3 )
+                            - ResistiveTerms(*childCell(0,1,0),*childCell(-1,1,0),*childCell(0,0,0),*childCell(0,1,-1),3);
+                    FluxIn += Flux( *childCell(1,1,-2), *childCell(1,1,-1), *childCell(1,1,0), *childCell(1,1,1), 3 )
+                            - ResistiveTerms(*childCell(1,1,0),*childCell(0,1,0),*childCell(1,0,0),*childCell(1,1,-1),3);
 
+                    // Average flux
+                    FluxIn *= 0.25;
+
+                }else
+                    FluxIn  = Flux( *cousinCell(0,0,-2), *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), 3 )
+                            - ResistiveTerms(ThisCell, *cousinCell(-1,0,0), *cousinCell(0,-1,0), *cousinCell(0,0,-1), 3);
+
+                divCor = -auxvar;
+
+                // If the cell is a leaf with virtual children and its upper cousin is a node, compute flux on upper level
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk+1) != 0 && node(Nl, Ni, Nj, Nk+1)->isInternalNode() && FluxCorrection)
+                {
+                    FluxOut  = Flux( *childCell(0,0,0), *childCell(0,0,1), *childCell(0,0,2), *childCell(0,0,3), 3 )
+                             - ResistiveTerms(*childCell(0,0,2),*childCell(-1,0,2),*childCell(0,-1,2),*childCell(0,0,1),3);
+                    FluxOut += Flux( *childCell(1,0,0), *childCell(1,0,1), *childCell(1,0,2), *childCell(1,0,3), 3 )
+                             - ResistiveTerms(*childCell(1,0,2),*childCell(0,0,2),*childCell(1,-1,2),*childCell(1,0,1),3);
+                    FluxOut += Flux( *childCell(0,1,0), *childCell(0,1,1), *childCell(0,1,2), *childCell(0,1,3), 3 )
+                             - ResistiveTerms(*childCell(0,1,2),*childCell(-1,1,2),*childCell(0,0,2),*childCell(0,1,1),3);
+                    FluxOut += Flux( *childCell(1,1,0), *childCell(1,1,1), *childCell(1,1,2), *childCell(1,1,3), 3 )
+                             - ResistiveTerms(*childCell(1,1,2),*childCell(0,1,2),*childCell(1,0,2),*childCell(1,1,1),3);
+
+                    // Average flux
+                    FluxOut *= 0.25;
+
+                }else
+                    FluxOut = Flux( *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), *cousinCell(0,0,2), 3 )
+                            - ResistiveTerms(*cousinCell(0,0,1), *cousinCell(-1,0,1), *cousinCell(0,-1,1), ThisCell , 3);
+
+                divCor += auxvar;
+
+            }else{
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk-1) != 0 && node(Nl, Ni, Nj, Nk-1)->isInternalNode() && FluxCorrection)
+                {
+                    FluxIn  = Flux( *childCell(0,0,-2), *childCell(0,0,-1), *childCell(0,0,0), *childCell(0,0,1), 3 );
+                    FluxIn += Flux( *childCell(1,0,-2), *childCell(1,0,-1), *childCell(1,0,0), *childCell(1,0,1), 3 );
+                    FluxIn += Flux( *childCell(0,1,-2), *childCell(0,1,-1), *childCell(0,1,0), *childCell(0,1,1), 3 );
+                    FluxIn += Flux( *childCell(1,1,-2), *childCell(1,1,-1), *childCell(1,1,0), *childCell(1,1,1), 3 );
+
+                    // Average flux
+                    FluxIn *= 0.25;
+
+                }else
+                    FluxIn  = Flux( *cousinCell(0,0,-2), *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), 3 );
+
+                divCor = -auxvar;
+
+                // If the cell is a leaf with virtual children and its upper cousin is a node, compute flux on upper level
+
+                if (isLeafWithVirtualChildren() && node(Nl, Ni, Nj, Nk+1) != 0 && node(Nl, Ni, Nj, Nk+1)->isInternalNode() && FluxCorrection)
+                {
+                    FluxOut  = Flux( *childCell(0,0,0), *childCell(0,0,1), *childCell(0,0,2), *childCell(0,0,3), 3 );
+                    FluxOut += Flux( *childCell(1,0,0), *childCell(1,0,1), *childCell(1,0,2), *childCell(1,0,3), 3 );
+                    FluxOut += Flux( *childCell(0,1,0), *childCell(0,1,1), *childCell(0,1,2), *childCell(0,1,3), 3 );
+                    FluxOut += Flux( *childCell(1,1,0), *childCell(1,1,1), *childCell(1,1,2), *childCell(1,1,3), 3 );
+
+                    // Average flux
+                    FluxOut *= 0.25;
+
+                }else
+                    FluxOut = Flux( *cousinCell(0,0,-1), ThisCell, *cousinCell(0,0,1), *cousinCell(0,0,2), 3 );
+
+                divCor += auxvar;
+
+            }
 			// Add divergence in z-direction
 			ThisCell.setDivergence( ThisCell.divergence() + (FluxIn - FluxOut)/(ThisCell.size(3)));
 
@@ -2216,12 +2430,12 @@ void Node::computeCorrection()
 		    }
 
         	ThisCell.setAverage(5, ThisCell.average(5) - TimeStep*PsiGrad);
-        	ThisCell.setAverage(6, ThisCell.average(6)*exp(-(alpha*ch*TimeStep/SpaceStep)));
+        	ThisCell.setAverage(6, ThisCell.average(6)*exp(-(cr*ch*TimeStep/SpaceStep)));
 
         }else if(DivClean==2)//GLM
         {
         	psi = ThisCell.psi();
-        	ThisCell.setAverage(6, psi*exp(-(alpha*ch*TimeStep/SpaceStep)));
+        	ThisCell.setAverage(6, psi*exp(-(cr*ch*TimeStep/SpaceStep)));
         }else if(DivClean==3)
         {
             Bdivergence=0.;
