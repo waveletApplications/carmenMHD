@@ -1,0 +1,7 @@
+<map id="Cell::energy" name="Cell::energy">
+<area shape="rect" id="node2" href="$classFineMesh.html#aff6e40feb55a8c1c40b2e757c1a10775" title="Computes velocity gradient (only for Navier&#45;Stokes). each cells. " alt="" coords="147,5,360,32"/>
+<area shape="rect" id="node4" href="$classNode.html#ae8ebdb7bc2b7c0e1c19117ec79d32b36" title="Writes cell&#45;average values in multiresolution representation and the corresponding mesh into file Fil..." alt="" coords="185,56,322,83"/>
+<area shape="rect" id="node6" href="$classNode.html#a982205a0123c5491ec8417955b3f0fdd" title="Computes velocity gradient (only for Navier&#45;Stokes). " alt="" coords="173,107,333,133"/>
+<area shape="rect" id="node3" href="$classFineMesh.html#adc26e6b91de2647369972544417d0a5f" title="Computes velocity gradient (only for Navier&#45;Stokes). one cell. " alt="" coords="408,5,595,32"/>
+<area shape="rect" id="node5" href="$View_8cpp.html#a7ccf9161651e810d976afeb98e1130fc" title="Writes the data of the tree structure into files TreeFileName (tree structure), MeshFileName (mesh) a..." alt="" coords="476,56,527,83"/>
+</map>

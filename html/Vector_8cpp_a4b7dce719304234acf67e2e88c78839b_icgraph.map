@@ -1,0 +1,18 @@
+<map id="dim" name="dim">
+<area shape="rect" id="node2" href="$Vector_8h.html#ac0bd8c9ece98bf0eb8ce1678b6982947" title="Returns the absolute value term by term of the vector. " alt="" coords="117,5,160,32"/>
+<area shape="rect" id="node3" href="$Vector_8h.html#ad528278ae7b12adaef241d18ddd77520" title="Returns the L1&#45;norm of the vector. " alt="" coords="119,56,158,83"/>
+<area shape="rect" id="node4" href="$Vector_8h.html#a171c9f5c75a0c9ba6755471e373410b5" title="Returns the L2&#45;norm of the vector. " alt="" coords="119,107,158,133"/>
+<area shape="rect" id="node15" href="$Vector_8h.html#a5756b90a2a80d13147fa29ed4e971bee" title="Returns the Max&#45;norm of the vector. " alt="" coords="110,157,167,184"/>
+<area shape="rect" id="node17" href="$Vector_8h.html#a5db60421ef3e5dc2b51382c27f157356" title="Writes the components of the vector V on screen. " alt="" coords="96,208,181,235"/>
+<area shape="rect" id="node5" href="$GetBoundaryCells_8cpp.html#abba53fcc0840cef1a8453a4c6294e9a4" title="Transform the 4 cells of the flux Cell1, Cell2, Cell3, Cell4 into C1, C2, C3, C4, to take into accoun..." alt="" coords="235,107,363,133"/>
+<area shape="rect" id="node6" href="$Flux_8cpp.html#a843511770b06fc5e4ae00d44eea0465e" title="Returns the flux at the interface between Cell2 and Cell3. Here a 4&#45;point space scheme is used..." alt="" coords="417,107,463,133"/>
+<area shape="rect" id="node7" href="$classFineMesh.html#a5b0783bd8a7216aecab591aa923ba2a2" title="Computes one Cell Divirgence. " alt="" coords="513,81,743,108"/>
+<area shape="rect" id="node13" href="$classNode.html#aa6124cbacf968f3f8f0a79606bc86182" title="Computes the divergence vector with the space discretization scheme. " alt="" coords="539,132,717,159"/>
+<area shape="rect" id="node8" href="$classFineMesh.html#ab437d4252ad38a6bda10b8ad592ec888" title="Computes the divergence vector with the space discretization scheme. " alt="" coords="792,81,995,108"/>
+<area shape="rect" id="node9" href="$TimeEvolution_8cpp.html#a0b2a323a69a8acec9f7aff4153be2adb" title="Computes a time evolution on the regular fine mesh Root. Only for finite volume computations. " alt="" coords="1043,81,1149,108"/>
+<area shape="rect" id="node10" href="$CPUTimeRef_8cpp.html#a83670ff3267f963d540f5b8f193f99ec" title="Returns the time required by a finite volume computation using iterations iterations and scales scale..." alt="" coords="1197,56,1299,83"/>
+<area shape="rect" id="node12" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1491,81,1541,108"/>
+<area shape="rect" id="node11" href="$InitTimeStep_8cpp.html#a3c31c20c15946994e3f9f6135a82a0fc" title="Inits time step and all the parameters which depend on it. " alt="" coords="1347,56,1443,83"/>
+<area shape="rect" id="node14" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="841,132,946,159"/>
+<area shape="rect" id="node16" href="$NormMaxQuantities_8cpp.html#a4b6a2b05b28d0576e2039613ef593be3" title="Returns the Max&#45;norm of the vector where every quantity is divided by its characteristic value..." alt="" coords="229,157,368,184"/>
+</map>

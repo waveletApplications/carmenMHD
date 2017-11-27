@@ -1,0 +1,5 @@
+<map id="Timer::realTime" name="Timer::realTime">
+<area shape="rect" id="node2" href="$Performance_8cpp.html#a5d33cf58ad4cd68291691a8225037458" title="Computes the performance of the computation and, for cluster computations, write it into file FileNam..." alt="" coords="168,5,264,32"/>
+<area shape="rect" id="node4" href="$classTimer.html#a77bec7e62d9191855e2684f35138a829" title="Adds time to buffer (only when a computation is restarted). " alt="" coords="174,56,258,83"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="312,5,363,32"/>
+</map>

@@ -1,0 +1,47 @@
+<map id="Carmen.h" name="Carmen.h">
+<area shape="rect" id="node2" href="$AdaptTimeStep_8cpp.html" title="This function computes the time step for the next iteration. " alt="" coords="5,80,141,107"/>
+<area shape="rect" id="node3" href="$ArtificialViscosity_8cpp.html" title="Computes the Laplacian terms for density, energy and momentum equations. It helps with the stability..." alt="" coords="166,80,313,107"/>
+<area shape="rect" id="node4" href="$Backup_8cpp.html" title="Backup the last simulation. " alt="" coords="339,80,429,107"/>
+<area shape="rect" id="node5" href="$BC_8cpp.html" title="This function returns the position of i, taking into account boundary conditions. ..." alt="" coords="453,80,520,107"/>
+<area shape="rect" id="node6" href="$BoundaryRegion_8cpp.html" title="External boundary conditions ( if UseBoundaryRegions = true) " alt="" coords="545,80,687,107"/>
+<area shape="rect" id="node7" href="$Cell_8cpp.html" title="Constructor and distructor of the cell class. Also computes the cell&#45;averages of the MHD variables..." alt="" coords="711,80,781,107"/>
+<area shape="rect" id="node8" href="$ComputedTolerance_8cpp.html" title="Adapt trheshold parameter or use it fixed. " alt="" coords="806,80,969,107"/>
+<area shape="rect" id="node9" href="$CPUTimeRef_8cpp.html" title="Compute the reference CPU time with the finite volume solver. The output is the CPU time for 1 iterat..." alt="" coords="994,80,1120,107"/>
+<area shape="rect" id="node10" href="$DigitNumber_8cpp.html" title="This function returns the number of digits of an integer. " alt="" coords="1145,80,1265,107"/>
+<area shape="rect" id="node11" href="$DivCleaning_8cpp.html" title="DivCleaning.cpp" alt="" coords="1290,80,1408,107"/>
+<area shape="rect" id="node12" href="$FileWrite_8cpp.html" title="Writes in binary or ASCII mode the real number arg into the file f. The global parameter DataIsBinary..." alt="" coords="1433,80,1532,107"/>
+<area shape="rect" id="node13" href="$FineMesh_8cpp.html" title="Fine mesh simulation functions. " alt="" coords="1556,80,1660,107"/>
+<area shape="rect" id="node14" href="$Flux_8cpp.html" title="Computes the numerical fluxes HLL and HLLD. " alt="" coords="1684,80,1756,107"/>
+<area shape="rect" id="node15" href="$FluxCorrection_8cpp.html" title="Computes the mixed correction in the numerical fluxes (Dedner, 2002) " alt="" coords="1781,80,1912,107"/>
+<area shape="rect" id="node16" href="$GetBoundaryCells_8cpp.html" title="Computes the cells C1, C2, C3, C4 in function of the cells Cell1, Cell2, Cell3, Cell4 taking into acc..." alt="" coords="1937,80,2089,107"/>
+<area shape="rect" id="node17" href="$InitAverage_8cpp.html" title="Fill the variables vector with the initial condition. " alt="" coords="2114,80,2227,107"/>
+<area shape="rect" id="node18" href="$InitResistivity_8cpp.html" title="Fill the magnetic resistivity parameter (x,y,z) " alt="" coords="2251,80,2377,107"/>
+<area shape="rect" id="node19" href="$InitTimeStep_8cpp.html" title="Compute the timestep of the very first iteration. " alt="" coords="2402,80,2523,107"/>
+<area shape="rect" id="node20" href="$InitTree_8cpp.html" title="Init graded tree (only for multiresolution solver) " alt="" coords="2548,80,2639,107"/>
+<area shape="rect" id="node21" href="$IntermediaryStates_8cpp.html" title="IntermediaryStates.cpp" alt="" coords="2663,80,2820,107"/>
+<area shape="rect" id="node22" href="$Limiter_8cpp.html" title="Limiter functions for the conservative variables. " alt="" coords="2845,80,2931,107"/>
+<area shape="rect" id="node23" href="$main_8cpp.html" title="Main function. " alt="" coords="2956,80,3029,107"/>
+<area shape="rect" id="node24" href="$Matrix_8cpp.html" title="Construct the data structures. " alt="" coords="3055,80,3136,107"/>
+<area shape="rect" id="node25" href="$MinAbs_8cpp.html" title="Computes the minimal value between 2 numbers. " alt="" coords="3161,80,3252,107"/>
+<area shape="rect" id="node26" href="$Node_8cpp.html" title="Constructs the tree structure and computes the MHD multiresolution approach. " alt="" coords="3277,80,3355,107"/>
+<area shape="rect" id="node27" href="$NormMaxQuantities_8cpp.html" title="Compute the Linf norm of a vector containing the physical quantities divided by their characteristic ..." alt="" coords="3380,80,3543,107"/>
+<area shape="rect" id="node28" href="$Parallel_8cpp.html" title="Parallel implementation (not working yet) " alt="" coords="3567,80,3657,107"/>
+<area shape="rect" id="node29" href="$Parameters_8cpp.html" title="User parameters. " alt="" coords="3681,80,3796,107"/>
+<area shape="rect" id="node30" href="$Performance_8cpp.html" title="Simulation information. " alt="" coords="3821,80,3941,107"/>
+<area shape="rect" id="node31" href="$PhysicalFluxMHD_8cpp.html" title="Computes the MHD physical flux. " alt="" coords="3966,80,4119,107"/>
+<area shape="rect" id="node32" href="$PrintGrid_8cpp.html" title="Functions to print every variable of the MHD model. " alt="" coords="4144,80,4243,107"/>
+<area shape="rect" id="node33" href="$PrintIntegral_8cpp.html" title="Print integral values into file &quot;FileName&quot;. " alt="" coords="4267,80,4383,107"/>
+<area shape="rect" id="node34" href="$RefreshTree_8cpp.html" title="Refresh the tree structure. " alt="" coords="4407,80,4525,107"/>
+<area shape="rect" id="node35" href="$Remesh_8cpp.html" title="Remesh the mesh. " alt="" coords="4551,80,4647,107"/>
+<area shape="rect" id="node36" href="$ResistiveTerms_8cpp.html" title="This computes the resistive terms of energy and magnetic field Equations. " alt="" coords="4671,80,4809,107"/>
+<area shape="rect" id="node37" href="$SchemeHLL_8cpp.html" title="Computes the HLL Riemann solver. " alt="" coords="4834,80,4952,107"/>
+<area shape="rect" id="node38" href="$SchemeHLLD_8cpp.html" title="Computes the HLLD Riemann solver. " alt="" coords="4977,80,5105,107"/>
+<area shape="rect" id="node39" href="$ShowTime_8cpp.html" title="Computes the CPU Time. " alt="" coords="5131,80,5240,107"/>
+<area shape="rect" id="node40" href="$Source_8cpp.html" title="Computes the source terms of the system. " alt="" coords="5264,80,5352,107"/>
+<area shape="rect" id="node41" href="$Step_8cpp.html" title="This function returns u(x) = 1 if x &lt; 0 or u(x) = 1 if x &lt; 0 or 0 if x &gt; 0 or 1/2 if x = 0..." alt="" coords="5376,80,5449,107"/>
+<area shape="rect" id="node42" href="$TimeAverageGrid_8cpp.html" title="Averages the grid over time. " alt="" coords="5474,80,5621,107"/>
+<area shape="rect" id="node43" href="$TimeEvolution_8cpp.html" title="Time evolution for finite volume with multiresolution. " alt="" coords="5645,80,5775,107"/>
+<area shape="rect" id="node44" href="$View_8cpp.html" title="Visualization for multiresolution. " alt="" coords="5801,80,5876,107"/>
+<area shape="rect" id="node45" href="$ViewEvery_8cpp.html" title="Print solution every PrintEvery iteration. " alt="" coords="5901,80,6011,107"/>
+<area shape="rect" id="node46" href="$ViewIteration_8cpp.html" title="Print solution if IterationNo = PrintIt1 to PrintIt6. " alt="" coords="6036,80,6159,107"/>
+</map>

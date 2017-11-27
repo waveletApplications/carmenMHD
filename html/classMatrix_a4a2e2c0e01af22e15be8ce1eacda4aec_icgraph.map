@@ -1,0 +1,31 @@
+<map id="Matrix::setValue" name="Matrix::setValue">
+<area shape="rect" id="node2" href="$classCell.html#af076d04b55de9b20d7416fd6b0c4e6fe" title="Sets the component no. i, j of the quantity gradient to UserAverage. " alt="" coords="385,43,505,69"/>
+<area shape="rect" id="node10" href="$classCell.html#a46c469a195a826744582fab532221d21" title="Identical to the previous one for the temporary values. Does not work for MHD! " alt="" coords="171,131,325,157"/>
+<area shape="rect" id="node13" href="$IntermediaryStates_8cpp.html#a7b0f86a2c86dd2092c536cf040185f37" title="Returns the intermediary states of HLLD numerical flux for MHD equations. " alt="" coords="207,181,289,208"/>
+<area shape="rect" id="node22" href="$classMatrix.html#a003d09f03ecb7db944793f55b0ee2020" title="Generates a copy of the matrix M. Example : " alt="" coords="197,232,299,259"/>
+<area shape="rect" id="node23" href="$classMatrix.html#a86bada8717aceadbe6949d95e68177ac" title="Set the current matrix to the dimension and the value of M. " alt="" coords="187,283,309,309"/>
+<area shape="rect" id="node24" href="$classMatrix.html#a14c2b908949c8525a948909ae9bd9148" title="Adds M to the current matrix. " alt="" coords="183,333,313,360"/>
+<area shape="rect" id="node25" href="$classMatrix.html#a8fd008baf81e3d61546bb5fb09a7aeb0" title="Returns the addition of the current matrix and M. " alt="" coords="187,384,309,411"/>
+<area shape="rect" id="node26" href="$classMatrix.html#a49ac651c8e23474bfa3bebf275f8d30b" title="Subtracts M to the current matrix. " alt="" coords="185,435,311,461"/>
+<area shape="rect" id="node27" href="$classMatrix.html#a7df2a68576da55c80d4083f1a5b25a8c" title="Returns the difference between the current matrix and M. " alt="" coords="189,485,307,512"/>
+<area shape="rect" id="node28" href="$classMatrix.html#a37dac237a281f6df34440b2596bdd4cc" title="Returns the product of the current matrix and a real a. " alt="" coords="189,536,307,563"/>
+<area shape="rect" id="node29" href="$classMatrix.html#aabee95c1aef3a463e4a6670c37bbdd75" title="Returns the division of the current matrix by a real a. " alt="" coords="189,587,307,613"/>
+<area shape="rect" id="node30" href="$classMatrix.html#a77e3c5cd2946a16b93b56c2cea073684" title="Sets matrix as eigenmatrix. " alt="" coords="171,637,325,664"/>
+<area shape="rect" id="node3" href="$classFineMesh.html#aff6e40feb55a8c1c40b2e757c1a10775" title="Computes velocity gradient (only for Navier&#45;Stokes). each cells. " alt="" coords="565,5,779,32"/>
+<area shape="rect" id="node5" href="$classNode.html#aec06dc2c482e7e8d6ac9a844886fd497" title="Fills the cell&#45;average values of every virtual leaf with values predicted from its parent and uncles..." alt="" coords="593,56,751,83"/>
+<area shape="rect" id="node9" href="$classNode.html#a982205a0123c5491ec8417955b3f0fdd" title="Computes velocity gradient (only for Navier&#45;Stokes). " alt="" coords="592,107,752,133"/>
+<area shape="rect" id="node4" href="$classFineMesh.html#adc26e6b91de2647369972544417d0a5f" title="Computes velocity gradient (only for Navier&#45;Stokes). one cell. " alt="" coords="849,5,1036,32"/>
+<area shape="rect" id="node6" href="$RefreshTree_8cpp.html#a0f73a18e7fc618dfe2987003ccd32195" title="Refresh the tree structure, i.e. compute the cell&#45;averages of the internal nodes by projection and th..." alt="" coords="895,81,990,108"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1805,132,1856,159"/>
+<area shape="rect" id="node8" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="1155,132,1261,159"/>
+<area shape="rect" id="node11" href="$classFineMesh.html#adef66e20c374d21bfa189c6ca07fb35c" title="Stores gradient values into temporary gradient values. " alt="" coords="373,93,517,120"/>
+<area shape="rect" id="node12" href="$classNode.html#a453b2afeac39252ee0bde26ad8b9cb4c" title="Stores gradient values into temporary gradient values. " alt="" coords="386,144,505,171"/>
+<area shape="rect" id="node14" href="$SchemeHLLD_8cpp.html#a7c916b8673e1f363174b6bc973a0877e" title="Returns the HLLD numerical flux for MHD equations. The scheme uses four cells to estimate the flux at..." alt="" coords="393,195,497,221"/>
+<area shape="rect" id="node15" href="$Flux_8cpp.html#a843511770b06fc5e4ae00d44eea0465e" title="Returns the flux at the interface between Cell2 and Cell3. Here a 4&#45;point space scheme is used..." alt="" coords="649,183,695,209"/>
+<area shape="rect" id="node16" href="$classFineMesh.html#a5b0783bd8a7216aecab591aa923ba2a2" title="Computes one Cell Divirgence. " alt="" coords="827,183,1058,209"/>
+<area shape="rect" id="node21" href="$classNode.html#aa6124cbacf968f3f8f0a79606bc86182" title="Computes the divergence vector with the space discretization scheme. " alt="" coords="854,132,1031,159"/>
+<area shape="rect" id="node17" href="$classFineMesh.html#ab437d4252ad38a6bda10b8ad592ec888" title="Computes the divergence vector with the space discretization scheme. " alt="" coords="1107,183,1309,209"/>
+<area shape="rect" id="node18" href="$TimeEvolution_8cpp.html#a0b2a323a69a8acec9f7aff4153be2adb" title="Computes a time evolution on the regular fine mesh Root. Only for finite volume computations. " alt="" coords="1358,183,1463,209"/>
+<area shape="rect" id="node19" href="$CPUTimeRef_8cpp.html#a83670ff3267f963d540f5b8f193f99ec" title="Returns the time required by a finite volume computation using iterations iterations and scales scale..." alt="" coords="1512,183,1613,209"/>
+<area shape="rect" id="node20" href="$InitTimeStep_8cpp.html#a3c31c20c15946994e3f9f6135a82a0fc" title="Inits time step and all the parameters which depend on it. " alt="" coords="1661,183,1757,209"/>
+</map>
