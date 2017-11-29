@@ -527,12 +527,12 @@ void FineMesh::computeCorrection_cell(int n)
 		    }
 
         	cell(n)->setAverage(5, cell(n)->average(5) - TimeStep*PsiGrad);
-        	cell(n)->setAverage(6,psi*exp(-(alpha*ch*TimeStep/SpaceStep)));
+        	cell(n)->setAverage(6,psi*exp(-(cr*ch*TimeStep/SpaceStep)));
 
         }else if(DivClean==2)
         {
         	psi = cell(n)->psi();
-        	cell(n)->setAverage(6,psi*exp(-(alpha*ch*TimeStep/SpaceStep)));
+        	cell(n)->setAverage(6,psi*exp(-(cr*ch*TimeStep/SpaceStep)));
         }
 
 
@@ -1608,6 +1608,52 @@ void FineMesh::writeAverage(const char* FileName)
 
                             divB += (B1-B2)/dx;
                         }
+                        FileWrite(output, FORMAT, divB);
+                        fprintf(output, "\n");
+                    }
+
+                    fprintf(output, "\n\nSCALARS DivBnorm float\nLOOKUP_TABLE default\n");
+  					for (n=0; n < (1<<(Dimension*ScaleNb)); n++){
+                        switch(Dimension)
+                        {
+                            case 1:
+                                i = n;
+                                j = k = 0;
+                                break;
+
+                            case 2:
+                                j = n%(1<<ScaleNb);
+                                i = n/(1<<ScaleNb);
+                                k = 0;
+                                break;
+
+                            case 3:
+                                k = n%(1<<ScaleNb);
+                                j = (n%(1<<(2*ScaleNb)))/(1<<ScaleNb);
+                                i =  n/(1<<(2*ScaleNb));
+                                break;
+                        };
+                        real divB=0, B1=0., B2=0.,dx=0.;
+                        real mod=0.;
+                        int ei=0,ej=0,ek=0;
+                        for (int AxisNo = 1; AxisNo <= Dimension; AxisNo ++)
+                        {
+
+                            ei = (AxisNo == 1)? 1:0;
+                            ej = (AxisNo == 2)? 1:0;
+                            ek = (AxisNo == 3)? 1:0;
+
+                            dx = cell(i,j,k)->size(AxisNo);
+                            dx *= 2.;
+
+                            B1 = cell(i+ei, j+ej, k+ek)->magField(AxisNo);
+                            B2 = cell(i-ei, j-ej, k-ek)->magField(AxisNo);
+
+                            divB += (B1-B2)/dx;
+                            mod  += (Abs(B1)+Abs(B2))/dx;
+                        }
+                        mod += 2.240e-13;
+                        divB = divB/mod;
                         FileWrite(output, FORMAT, divB);
                         fprintf(output, "\n");
                     }
