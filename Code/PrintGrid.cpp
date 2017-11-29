@@ -380,11 +380,8 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
         Bx = magField(BC(i,1,n), BC(j,2,n),BC(k,3,n),1);
         By = magField(BC(i,1,n), BC(j,2,n),BC(k,3,n),2);
 
-        //if(Bx2!=Bx1 && By2!=By1)
-        //Div = ((abs(Bx1)+abs(Bx2))/(2.*dx) + (abs(By1)+abs(By2))/(2.*dy) + 1.120e-13);
-        Div = 0.5*Abs(Bx1);///dx + 0.5*abs(By1)/dy + 1.120e-13;
-        //else
-        //    Div = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+        Div = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+
 	}else if (Dimension == 3){
 
         dx = (XMax[1]-XMin[1])/n;
