@@ -527,12 +527,12 @@ void FineMesh::computeCorrection_cell(int n)
 		    }
 
         	cell(n)->setAverage(5, cell(n)->average(5) - TimeStep*PsiGrad);
-        	cell(n)->setAverage(6,psi*exp(-(cr*ch*TimeStep/SpaceStep)));
+        	cell(n)->setAverage(6,psi*exp(-(alpha*alpha*TimeStep/SpaceStep)));
 
         }else if(DivClean==2)
         {
         	psi = cell(n)->psi();
-        	cell(n)->setAverage(6,psi*exp(-(cr*ch*TimeStep/SpaceStep)));
+        	cell(n)->setAverage(6,psi*exp(-(alpha*alpha*TimeStep/SpaceStep)));
         }
 
 
