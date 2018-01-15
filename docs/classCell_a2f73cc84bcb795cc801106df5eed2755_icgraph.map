@@ -1,0 +1,4 @@
+<map id="Cell::center" name="Cell::center">
+<area shape="rect" id="node2" href="$classCell.html#a2c9250c343bd42d831dfe023b01cf7ce" title="Returns true if the cell is inside the boundary. " alt="" coords="145,5,298,32"/>
+<area shape="rect" id="node3" href="$classCell.html#a910ebec065cb047823603cafbfe09af6" title="Returns true if the cell is inside the fluid. " alt="" coords="347,5,450,32"/>
+</map>

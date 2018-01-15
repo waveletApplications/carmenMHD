@@ -1,0 +1,6 @@
+<map id="BC" name="BC">
+<area shape="rect" id="node2" href="$classPrintGrid.html#a973ff2f70d3b4133051f59401f25b294" title="Returns the divergence of magnetic field B located at i, j, k. " alt="" coords="97,5,250,32"/>
+<area shape="rect" id="node5" href="$classPrintGrid.html#a6061cbaa178ea94efd28b5fdfe1c4983" title="Returns 0 in 1D, the scalar vorticity in 2D, the norm of the cell&#45;average vorticity in 3D..." alt="" coords="110,56,237,83"/>
+<area shape="rect" id="node3" href="$classNode.html#a19ada573ff6dd50d01dd6b049c469a2f" title="Writes cell&#45;average values on a regular grid of level L into file FileName. " alt="" coords="299,31,437,57"/>
+<area shape="rect" id="node4" href="$View_8cpp.html#a7ccf9161651e810d976afeb98e1130fc" title="Writes the data of the tree structure into files TreeFileName (tree structure), MeshFileName (mesh) a..." alt="" coords="485,31,536,57"/>
+</map>

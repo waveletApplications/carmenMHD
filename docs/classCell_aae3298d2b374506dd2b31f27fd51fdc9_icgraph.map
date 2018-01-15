@@ -1,0 +1,5 @@
+<map id="Cell::fastSpeed" name="Cell::fastSpeed">
+<area shape="rect" id="node2" href="$classNode.html#a822a9e62c619d82f40fa139b8c7c8c4b" title="Computes integral values like e.g. flame velocity, global error, etc. " alt="" coords="165,31,320,57"/>
+<area shape="rect" id="node3" href="$main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="396,5,447,32"/>
+<area shape="rect" id="node4" href="$TimeEvolution_8cpp.html#a76043967c75b9adaa6d1a98ad86e0e15" title="Computes a time evolution on the tree structure, the root node being Root. Only for multiresolution c..." alt="" coords="369,56,474,83"/>
+</map>
