@@ -2784,8 +2784,8 @@ void Node::computeIntegral()
 		// --- Compute the global momentum, global energy and global enstrophy ---
 
 		GlobalMomentum 	+= ThisCell.average(2)*dx*dy*dz;
-		GlobalEnergy 	+= .5*(ThisCell.magField()*ThisCell.magField() + ThisCell.density()*(ThisCell.velocity()*ThisCell.velocity())) + ThisCell.pressure()/(Gamma-1.0);
-		GlobalEnergy    *= dx*dy*dz;
+		//GlobalEnergy 	+= .5*(ThisCell.magField()*ThisCell.magField() + ThisCell.density()*(ThisCell.velocity()*ThisCell.velocity())) + ThisCell.pressure()/(Gamma-1.0);
+		GlobalEnergy    += ThisCell.average(5)*dx*dy*dz;
 		Helicity        += (ThisCell.magField(2)*ThisCell.velocity(3) - ThisCell.magField(3)*ThisCell.velocity(2))*ThisCell.magField(1) +
                            (ThisCell.magField(3)*ThisCell.velocity(1) - ThisCell.magField(1)*ThisCell.velocity(3))*ThisCell.magField(2) +
                            (ThisCell.magField(1)*ThisCell.velocity(2) - ThisCell.magField(2)*ThisCell.velocity(1))*ThisCell.magField(3);
