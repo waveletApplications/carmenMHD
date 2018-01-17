@@ -1030,9 +1030,9 @@ void FineMesh::computeIntegral()
 			// --- Compute the global momentum, global energy and global enstrophy ---
 
 			GlobalMomentum 	+= cell(n)->average(2)*dx*dy*dz;
-			GlobalEnergy 	+= .5*(cell(n)->magField()*cell(n)->magField() + cell(n)->density()*(cell(n)->velocity()*cell(n)->velocity())) + cell(n)->pressure()/(Gamma-1.0);
+			//GlobalEnergy 	+= .5*(cell(n)->magField()*cell(n)->magField() + cell(n)->density()*(cell(n)->velocity()*cell(n)->velocity())) + cell(n)->pressure()/(Gamma-1.0);
 			//GlobalEnergy 	+= .5*(cell(n)->density()*(cell(n)->velocity()*cell(n)->velocity()));
-			GlobalEnergy    *= dx*dy*dz;
+			GlobalEnergy    += cell(n)->average(5)*dx*dy*dz;
 			Helicity        += (cell(n)->magField(2)*cell(n)->velocity(3) - cell(n)->magField(3)*cell(n)->velocity(2))*cell(n)->magField(1) +
                                (cell(n)->magField(3)*cell(n)->velocity(1) - cell(n)->magField(1)*cell(n)->velocity(3))*cell(n)->magField(2) +
                                (cell(n)->magField(1)*cell(n)->velocity(2) - cell(n)->magField(2)*cell(n)->velocity(1))*cell(n)->magField(3);
@@ -1078,7 +1078,6 @@ void FineMesh::computeIntegral()
         modB += 1.120e-13;
         DIVBMax = Max(DIVBMax,0.5*Abs(divB));
 	    DIVB    = DIVBMax/modB;
-		break;
 		}
 
 	// --- End loop on all cells ---
