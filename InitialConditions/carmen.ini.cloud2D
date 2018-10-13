@@ -8,7 +8,7 @@ if (x<0.05) xLeft=1;
 
 double ratio=0.15, x0=0.25, y0=0.5, rho0=10.0;
 double r1 =3.86859,     r2 =1.0;
-double vx2=0.0,         vx1=11.2536;
+double vx1=11.2536,     vx2=0.0;
 double vy1=0.0    ,     vy2=0.0;
 double vz1=0.0    ,     vz2=0.0;
 double p1 =167.345,     p2 =1.0;
