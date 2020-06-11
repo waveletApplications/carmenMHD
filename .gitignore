@@ -30,3 +30,18 @@
 *.exe
 *.out
 *.app
+
+# Data files
+*.vtk
+*.dat
+*.prf
+*.par
+*.ini
+*.bak
+*.cbp
+*.depend
+*.layout
+bin
+Code/carmen
+Code/*.par
+Code/*.prf
