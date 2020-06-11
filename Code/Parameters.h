@@ -160,7 +160,7 @@ ________________________________________________________________________________
 	extern real	ConstantForce;		/*!< False = adapt force to maintain constant energy*/
 	extern real     Circulation;		/*!< Circulation parameter*/
 	extern bool     ComputeTemp;
-	
+
 /*
 ______________________________________________________________________________________________
 
@@ -265,7 +265,7 @@ ________________________________________________________________________________
 extern int AllTaskScaleNb;  /*!< Global Scale number*/
 extern int CPUScales;       /*!< CPUScales=log2(Number of processors)*/
 extern int size;            /*!< Number of processors*/
-extern int rank;            /*!< Current CPU*/
+extern int rankx;            /*!< Current CPU*/
 extern real AllXMin[4];     /*!< Global domain parameters*/
 extern real AllXMax[4];
 

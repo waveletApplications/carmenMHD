@@ -27,8 +27,8 @@ void CreateMPITopology() {
 
  MPI_Dims_create(size,Dimension,CartDims);
  MPI_Cart_create(MPI_COMM_WORLD,Dimension,CartDims,periods,1,&comm_cart);
- MPI_Comm_rank(comm_cart, &rank);
- MPI_Cart_coords(comm_cart,rank,Dimension,coords);
+ MPI_Comm_rank(comm_cart, &rankx);
+ MPI_Cart_coords(comm_cart,rankx,Dimension,coords);
 
  MPI_Cart_shift(comm_cart, 0, -1, &src, &rank_il);
  MPI_Cart_shift(comm_cart, 0, 1, &src, &rank_iu);

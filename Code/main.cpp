@@ -25,9 +25,9 @@
  *
  * CARMEN code was firstly developed by Olivier Roussel to perform the simulation of the Advection-diffusion, Burgers-diffusion, Flame front, Flame ball,
  * Flame-curl interaction and Navier-Stokes equations with the finite volume method in the context of the adaptive multiresolution analysis for cell-averages.
- * The code was extended to the resistive and ideal MHD equations in order to take advantage of the wavelet based multiresolution algorithm. 
+ * The code was extended to the resistive and ideal MHD equations in order to take advantage of the wavelet based multiresolution algorithm.
  * Its development was done in such a way that the code structure was exclusively for MHD simulations.
- * 
+ *
  */
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 #else
   	size=1;
-	rank=0;
+	rankx=0;
 #endif
 
 	if (argc == 2)
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 		exit(0);
 	}
 
-  	printf("My Rank=%d\n",rank);
+  	printf("My Rank=%d\n",rankx);
 
   	// --- Each CPU print his coordinates in the virtual processor cart ------------------------
 	printf("Cart_i = %d;     Cart_j = %d;     Cart_k = %d;\n",coords[0],coords[1],coords[2]);
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 	// -- Compute initial time step --
 	InitTimeStep();
 
-	if (rank==0) PrintIntegral("Integral.dat");
+	if (rankx==0) PrintIntegral("Integral.dat");
 
 	// --- Save initial values into files ------------------------------------------------------
 
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
   	}
 
   	// --- Write header with parameters, as we have run sequantial code
-  	if (rank==0) FMesh->writeHeader("header.txt");
+  	if (rankx==0) FMesh->writeHeader("header.txt");
 
   	// Restore variables
   	for (int i=0;i<4;i++)
@@ -246,12 +246,12 @@ int main(int argc, char *argv[])
 		if ((IterationNo-1)%Refresh == 0)
 		{
 			// - Write integral values -
-			if (rank==0) PrintIntegral("Integral.dat");
+			if (rankx==0) PrintIntegral("Integral.dat");
 
 			if (Cluster == 0)
 				ShowTime(CPUTime);  // Show time on screen
 		  //else
-			if (rank==0) Performance("carmen.prf"); // Refresh file "carmen.prf"
+			if (rankx==0) Performance("carmen.prf"); // Refresh file "carmen.prf"
     		}
 
 		// --- Backup data every (10*Refresh) iteration ---
@@ -301,7 +301,7 @@ int main(int argc, char *argv[])
 
 	// --- Write integral values ---------------------------------------------------------------
 
-	if (rank==0) PrintIntegral("Integral.dat");
+	if (rankx==0) PrintIntegral("Integral.dat");
 
 	IterationNo++;
 
@@ -316,7 +316,7 @@ int main(int argc, char *argv[])
 
 	// --- Analyse performance and save it into file -------------------------------------------
 
-	if (rank==0) Performance("carmen.prf");
+	if (rankx==0) Performance("carmen.prf");
 
 	// --- End ---------------------------------------------------------------------------------
 

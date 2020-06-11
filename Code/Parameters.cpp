@@ -219,7 +219,7 @@ ________________________________________________________________________________
 
 
 //parallel
- 	int rank;
+ 	int rankx;
 	int size;
 	int CPUScales;
 	real AllXMin[4],AllXMax[4];
