@@ -7,8 +7,8 @@ double  auxK2=sqrt(2*pi);
 int xLeft=0;
 int yDown=0;
 
-if (x<=0.5) xLeft=1;
-if (y<=0.5) yDown=1;
+if (x<=0.0) xLeft=1;
+if (y<=0.0) yDown=1;
 
 double r1 =1.08,      r2=1.0;
 double vx1=1.296,     vx2=0.0;
