@@ -241,6 +241,7 @@ real PrintGrid::divergenceB(const int i, const int j, const int k) const
 	real By1=0., By2=0., Bz1=0., Bz2=0.;
 	real Bx1=0., Bx2=0.;
     real Bx =0., By=0.;
+
 	if (Dimension == 1){
         dx = (XMax[1]-XMin[1])/n;
 
@@ -261,9 +262,10 @@ real PrintGrid::divergenceB(const int i, const int j, const int k) const
         By = magField(BC(i,1,n), BC(j,2,n),BC(k,3,n),2);
 
         //if(Bx2!=Bx1 && By2!=By1)
-            Div = ((Bx2-Bx1)/(dx) + (By2-By1)/(dy))/((fabs(Bx1)+fabs(Bx2))/(dx) + (fabs(By1)+fabs(By2))/(dy) + 1.120e-13);
-        //else
-        // Div = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+            //;Div = ((Bx2-Bx1)/(dx) + (By2-By1)/(dy))/((fabs(Bx1)+fabs(Bx2))/(dx) + (fabs(By1)+fabs(By2))/(dy) + 1.120e-13);
+
+        Div = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+
 	}else if (Dimension == 3){
 
         dx = (XMax[1]-XMin[1])/n;
@@ -293,65 +295,6 @@ ________________________________________________________________________________
 
 real PrintGrid::vorticity(const int i, const int j, const int k) const
 {
-/*
-	int L=localScaleNb;
-	real dx=0., dy=0., dz=0.;
-	real U=0.,V=0.,W=0.;
-	real Uy1=0., Uy2=0., Uz1=0., Uz2=0.;
-	real Vx1=0., Vx2=0., Vz1=0., Vz2=0.;
-	real Wx1=0., Wx2=0., Wy1=0., Wy2=0.;
-
-	int n = (1<<L); 					// n = 2^localScaleNb
-
-	real result=0.;
-
-	if (Dimension == 1)
-		return 0.;
-
-	// Compute vorticity components
-
-	dx = (XMax[1]-XMin[1])/n;
-	dy = (XMax[2]-XMin[2])/n;
-
-	Vx1 = velocity(BC(i-1,1,n), BC(j  ,2,n),BC(k,3,n),2);
-	Vx2 = velocity(BC(i+1,1,n), BC(j  ,2,n),BC(k,3,n),2);
-	Uy1 = velocity(BC(i  ,1,n), BC(j-1,2,n),BC(k,3,n),1);
-	Uy2 = velocity(BC(i  ,1,n), BC(j+1,2,n),BC(k,3,n),1);
-
-	if (Dimension == 2)
-		W = (Vx2-Vx1)/(2.*dx) - (Uy2-Uy1)/(2.*dy);
-	else
-	{
-		dz = (XMax[3]-XMin[3])/(1<<L);
-
-		Uz1 = velocity(BC(i  ,1,n), BC(j  ,2,n),BC(k-1,3,n),1);
-		Uz1 = velocity(BC(i  ,1,n), BC(j  ,2,n),BC(k+1,3,n),1);
-
-		Vz1 = velocity(BC(i  ,1,n), BC(j  ,2,n),BC(k-1,3,n),2);
-		Vz1 = velocity(BC(i  ,1,n), BC(j  ,2,n),BC(k+1,3,n),2);
-
-		Wx1 = velocity(BC(i-1,1,n), BC(j  ,2,n),BC(k  ,3,n),3);
-		Wx2 = velocity(BC(i+1,1,n), BC(j  ,2,n),BC(k  ,3,n),3);
-
-		Wy1 = velocity(BC(i  ,1,n), BC(j-1,2,n),BC(k  ,3,n),3);
-		Wy2 = velocity(BC(i  ,1,n), BC(j+1,2,n),BC(k  ,3,n),3);
-
-		U = (Wy2-Wy1)/(2.*dy) - (Vz2-Vz1)/(2.*dz);
-		V = (Uz2-Uz1)/(2.*dz) - (Wx2-Wx1)/(2.*dx);
-		W = (Vx2-Vx1)/(2.*dx) - (Uy2-Uy1)/(2.*dy);
-
-	}
-
-	switch(Dimension)
-	{
-		case 2:
-			result = W;
-			break;
-
-		case 3:
-			result = sqrt(U*U+V*V+W*W);
-	};
-*/
 
 //	return result;
 	int L=localScaleNb;
@@ -360,7 +303,9 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
 	real Div=0.;
 	real By1=0., By2=0., Bz1=0., Bz2=0.;
 	real Bx1=0., Bx2=0.;
-    real Bx =0., By=0.;
+    real Bx =0., By=0., Bz=0.;
+    real aux=0.;
+
 	if (Dimension == 1){
         dx = (XMax[1]-XMin[1])/n;
 
@@ -371,22 +316,26 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
 
 	}else if (Dimension == 2){
 
-        dx = (XMax[1]-XMin[1])/n;
-        dy = (XMax[2]-XMin[2])/n;
+        dx  = (XMax[1]-XMin[1])/n;
+        dy  = (XMax[2]-XMin[2])/n;
+
         Bx1 = magField(BC(i-1,1,n), BC(j  ,2,n),BC(k,3,n),1);
         Bx2 = magField(BC(i+1,1,n), BC(j  ,2,n),BC(k,3,n),1);
         By1 = magField(BC(i  ,1,n), BC(j-1,2,n),BC(k,3,n),2);
         By2 = magField(BC(i  ,1,n), BC(j+1,2,n),BC(k,3,n),2);
-        Bx = magField(BC(i,1,n), BC(j,2,n),BC(k,3,n),1);
-        By = magField(BC(i,1,n), BC(j,2,n),BC(k,3,n),2);
+        Bx  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k,3,n),1);
+        By  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k,3,n),2);
+        Bz  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k,3,n),3);
 
-        Div = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+        aux = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
+        Div = dx*dy*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
+       // Div = Max(Abs(dx),Abs(dy))*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
 
 	}else if (Dimension == 3){
 
-        dx = (XMax[1]-XMin[1])/n;
-        dy = (XMax[2]-XMin[2])/n;
-        dz = (XMax[3]-XMin[3])/n;
+        dx  = (XMax[1]-XMin[1])/n;
+        dy  = (XMax[2]-XMin[2])/n;
+        dz  = (XMax[3]-XMin[3])/n;
 
         Bx1 = magField(BC(i-1,1,n), BC(j  ,2,n),BC(k  ,3,n),1);
         Bx2 = magField(BC(i+1,1,n), BC(j  ,2,n),BC(k  ,3,n),1);
@@ -394,8 +343,14 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
         By2 = magField(BC(i  ,1,n), BC(j+1,2,n),BC(k  ,3,n),2);
         Bz1 = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k-1,3,n),3);
         Bz2 = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k+1,3,n),3);
+        Bx  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k  ,3,n),1);
+        By  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k  ,3,n),2);
+        Bz  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k  ,3,n),3);
 
-        Div = (Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy) + (Bz2-Bz1)/(2.*dz);
+        aux = (Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy) + (Bz2-Bz1)/(2.*dz);
+        Div = dx*dy*dz*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
+        //Div = Max(Abs(dx),Max(Abs(dy),Abs(dz)))*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
+
 
 	}
 

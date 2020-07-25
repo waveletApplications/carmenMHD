@@ -33,7 +33,7 @@
  * a leaf, the value is replaced by the one of the node, else it is predicted from parents.
  *
  * Such grid does not contain any cell information, in order to reduce memory requirements.
- * 
+ *
  */
 class PrintGrid
 {
@@ -68,7 +68,7 @@ ________________________________________________________________________________
 
 /**
  * @brief Sets the cell-average vector located at <i>i, j, k</i> to <i>UserAverage</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -79,7 +79,7 @@ void   setValue(const int i, const int j, const int k, const Vector& UserAverage
 
 /**
  * @brief Returns the cell-average vector located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -101,7 +101,7 @@ real value(const int i, const int j, const int k, const int QuantityNo) const;
 /**
  * @brief Returns the quantity <i>QuantityNo</i> of the cell-average vector located at <i>i, j, k</i>,
  * taking into account boundary conditions.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -112,7 +112,7 @@ real cellValue(const int i, const int j, const int k, const int QuantityNo) cons
 
 /**
  * @brief Returns the cell-average density located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -122,7 +122,7 @@ inline real density(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the cell-average density located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -132,7 +132,7 @@ inline real psi(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the cell-average pressure located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -142,7 +142,7 @@ real pressure(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the cell-average temperature located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -152,7 +152,7 @@ real temperature(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the cell-average concentration of the limiting reactant, located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -162,7 +162,7 @@ real concentration(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the cell-average energy per unit of volume located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -172,7 +172,7 @@ inline real energy(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the <i>AxisNo</i>-th component of the cell-average velocity located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -183,7 +183,7 @@ inline real velocity(const int i, const int j, const int k, const int AxisNo) co
 
 /**
  * @brief Returns the cell-average velocity located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -193,7 +193,7 @@ Vector	velocity(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the divergence of magnetic field B located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -204,7 +204,7 @@ real divergenceB(const int i, const int j, const int k) const;
 /**
  * @brief Returns 0 in 1D, the scalar vorticity in 2D, the norm of the cell-average vorticity in 3D, located at <i>i, j, k</i>.
  * Does not work for MHD!
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -214,7 +214,7 @@ real vorticity(const int i, const int j, const int k) const;
 
 /**
  * @brief Returns the <i>AxisNo</i>-th component of the cell-average velocity located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -225,7 +225,7 @@ inline real magField(const int i, const int j, const int k, const int AxisNo) co
 
 /**
  * @brief Returns the cell-average velocity located at <i>i, j, k</i>.
- * 
+ *
  * @param i Position x
  * @param j Position y
  * @param k Position z
@@ -244,7 +244,7 @@ ________________________________________________________________________________
 /**
  * @brief Stores the cell-average values of the current grid into temporary values,
  * in order to compute cell-averages in the next finer grid.
- * 
+ *
  * @return void
  */
 void refresh();
@@ -252,7 +252,7 @@ void refresh();
 /**
  * @brief Predicts the cell-average values of the current grid from the values stored in the
  * temporary ones.
- * 
+ *
  * @param l Level
  * @param i Position x
  * @param j Position y
@@ -263,7 +263,7 @@ void predict(const int l, const int i, const int j, const int k);
 
 /**
  * @brief Transform cell-average values into point values.
- * 
+ *
  * @return void
  */
 void computePointValue();
@@ -279,10 +279,10 @@ private:
   /**
    * @brief Returns temporary cell-average values at the level <i>l</i> and at
    * the position <i>i, j, k</i>.
-   * 
+   *
    * @param l level
    * @param i Position x
-   * @param j Position y 
+   * @param j Position y
    * @param k Position z
    * @return Vector
    */
