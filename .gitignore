@@ -34,14 +34,21 @@
 # Data files
 *.vtk
 *.dat
-*.prf
-*.par
-*.ini
+carmen.prf
+carmen.par
+*.gp
+*.m
+*.eps
+*.png
+carmen.ini
 *.bak
 *.cbp
 *.depend
 *.layout
-bin
 Code/carmen
-Code/*.par
-Code/*.prf
+Code/carmen.par
+Code/carmen.prf
+Code/carmen.ini
+Code/*.eps
+Code/*.png
+bin

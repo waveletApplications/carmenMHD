@@ -25,7 +25,7 @@ Vector InitAverage(real x, real y, real z)
 
 	Vector Result(QuantityNb);
 	real	 *Q;
-  Q = new real [QuantityNb+1];
+    Q = new real [QuantityNb+1];
 	int		 n;
 
 	// --- Init Q ---
@@ -42,7 +42,7 @@ Vector InitAverage(real x, real y, real z)
 	for (n = 1; n <= QuantityNb; n++)
 		Result.setValue(n, Q[n]);
 
-  delete[] Q;
+    delete[] Q;
 
 	return Result;
 }

@@ -64,7 +64,7 @@ ________________________________________________________________________________
 // 2) Solved equations ----------------------------------------------
 
 	int   	EquationType=7;			// It works only for MHD (EquationType=7)
-	int     SchemeNb=1;		// 1 = HLL, 2 = HLLD
+	int     SchemeNb=1;		// 1 = HLL, 2 = HLLD   numerical fluxes
 	int     LimiterNo=5;	// 1 = minmod, 2= van albada, 3 = van lee, 4= superbee, 5 = monotonized central (default)
 	int     ScalarEqNb=0;	// Number of additional scalar equations
 	int     DivClean=2;     // 1 = EGLM, 2 = GLM
