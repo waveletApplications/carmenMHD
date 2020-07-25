@@ -197,11 +197,11 @@ FineMesh::FineMesh()
                                     cell(n)->setAverage( cell(n)->average()+.25* InitAverage(
                                     cell(n)->center(1)+(i-0.5)*cell(n)->size(1),
                                     cell(n)->center(2)+(j-0.5)*cell(n)->size(2) ) );
-                                    cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2)));
+                                    if(Resistivity)cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2)));
                                 }
                         }else{
                             cell(n)->setAverage(InitAverage(cell(n)->center(1),cell(n)->center(2)));
-                            cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2)));
+                            if(Resistivity)cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2)));
                         }
 					break;
 
@@ -214,11 +214,11 @@ FineMesh::FineMesh()
                                         cell(n)->center(1)+(i-0.5)*cell(n)->size(1),
                                         cell(n)->center(2)+(j-0.5)*cell(n)->size(2),
                                         cell(n)->center(3)+(k-0.5)*cell(n)->size(3) ) );
-                                        cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2),cell(n)->center(3)));
+                                        if(Resistivity)cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2),cell(n)->center(3)));
                                     }
                         }else{
                             cell(n)->setAverage(InitAverage(cell(n)->center(1),cell(n)->center(2),cell(n)->center(3)));
-                            cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2),cell(n)->center(3)));
+                            if(Resistivity)cell(n)->setRes(InitResistivity(cell(n)->center(1),cell(n)->center(2),cell(n)->center(3)));
                         }
 
 						break;
@@ -968,7 +968,7 @@ void FineMesh::computeIntegral()
 
 	int	n=0;			// cell number
 	int 	AxisNo;			// Counter on dimension
-	real	dx=0., dy=0., dz=0.;	// Cell size
+	real	dx=0., dy=0., dz=0., dif=1;	// Cell size
 	Vector 	Center(Dimension);  	// local center of the flame ball
 	real 	VelocityMax=0.;		// local maximum of the velocity
     real    divB=0;
@@ -1069,15 +1069,27 @@ void FineMesh::computeIntegral()
                 dx = cell(n)->size(AxisNo);
                // dx *= 2.;
 
-                B1=cell(i+ei,j+ej,k+ek)->magField(AxisNo);
-  				B2=cell(i-ei,j-ej,k-ek)->magField(AxisNo);
-  				modB += (B1 + B2)/dx;
+                B1 = cell(i+ei,j+ej,k+ek)->magField(AxisNo);
+  				B2 = cell(i-ei,j-ej,k-ek)->magField(AxisNo);
+
+  				//modB += (B1 + B2)/dx;
+  				//modB  = B*B;
   				divB += (B1-B2)/dx;
+  				dif  *= dx;
 
             }
-        modB += 1.120e-13;
-        DIVBMax = Max(DIVBMax,0.5*Abs(divB));
-	    DIVB    = DIVBMax/modB;
+
+            modB    = cell(n)->magField(1)*cell(n)->magField(1)
+                    + cell(n)->magField(2)*cell(n)->magField(2)
+                    + cell(n)->magField(3)*cell(n)->magField(3);
+            modB    = sqrt(modB);
+            DIVBMax = Max(DIVBMax,Abs(0.5*divB));
+            DIVB    = Max(DIVB,dif*Abs(divB)/modB);
+            //DIVB   += dx*dy*dz*dif*Abs(divB)/modB;
+            //modB += 1.120e-13;
+            //DIVBMax = Max(DIVBMax,0.5*Abs(divB));
+            //DIVB    = DIVBMax/modB;
+
 		}
 
 	// --- End loop on all cells ---
@@ -1411,7 +1423,7 @@ void FineMesh::writeAverage(const char* FileName)
 
                             case 3:
                                 k = n%(1<<ScaleNb);
-                                        j = (n%(1<<(2*ScaleNb)))/(1<<ScaleNb);
+                                j = (n%(1<<(2*ScaleNb)))/(1<<ScaleNb);
                                 i =  n/(1<<(2*ScaleNb));
                                 break;
                         };

@@ -140,23 +140,22 @@ void Node::initValue()
 			case 1:
 				for (i=0;i<=1;i++)
 				ThisCell.setAverage( ThisCell.average()+.5* InitAverage(
-					ThisCell.center(1)+(i-0.5)*ThisCell.size(1)
-				) );
+					ThisCell.center(1)+(i-0.5)*ThisCell.size(1)) );
 				break;
 
 			case 2:
                 if(IcNb){
 					for (i=0;i<=1;i++){
                         for (j=0;j<=1;j++){
-                            ThisCell.setAverage( ThisCell.average()+.25* InitAverage(
+                            ThisCell.setAverage( ThisCell.average()+.25*InitAverage(
                             ThisCell.center(1)+(i-0.5)*ThisCell.size(1),
                             ThisCell.center(2)+(j-0.5)*ThisCell.size(2)));
-                            ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2)));
+                            if(Resistivity)ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2)));
                         }
                     }
                 }else{
                     ThisCell.setAverage(InitAverage(ThisCell.center(1), ThisCell.center(2)));
-                    ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2)));
+                    if(Resistivity)ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2)));
                 }
 
 				break;
@@ -170,12 +169,12 @@ void Node::initValue()
                                     ThisCell.center(1)+(i-0.5)*ThisCell.size(1),
                                     ThisCell.center(2)+(j-0.5)*ThisCell.size(2),
                                     ThisCell.center(3)+(k-0.5)*ThisCell.size(3)) );
-                                ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2),ThisCell.center(3)));
+                                    if(Resistivity)ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2),ThisCell.center(3)));
                             }
 
                 }else{
                     ThisCell.setAverage(InitAverage(ThisCell.center(1), ThisCell.center(2),ThisCell.center(3)));
-                    ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2),ThisCell.center(3)));
+                    if(Resistivity)ThisCell.setRes(InitResistivity(ThisCell.center(1), ThisCell.center(2),ThisCell.center(3)));
                 }
 				break;
 		};
@@ -2687,7 +2686,7 @@ void Node::computeIntegral()
   int 	QuantityNo;			// Quantity number (0 to QuantityNb)
 	int	n;				// Counter on children
 	int 	AxisNo;				// Counter on dimension
-	real 	dx, dy=0., dz=0.;		// Cell size
+	real 	dx, dy=0., dz=0., dif=1;		// Cell size
 	Vector 	Center(Dimension);  		// local center of the flame ball
 	real 	VelocityMax;			// local maximum of the velocity
 	real    MaxSpeed;
@@ -2698,7 +2697,7 @@ void Node::computeIntegral()
     real    divB=0;
     real    modB=0.;
 
-    real    B1=0., B2=0.;           // Left and right magnetic field cells
+    real    B1=0., B2=0., B=0.;           // Left and right magnetic field cells
 
 	int 	ei=0, ej=0, ek=0;		// 1 if this direction is chosen, 0 elsewhere
 
@@ -2825,12 +2824,20 @@ void Node::computeIntegral()
 
             B1 = cell(Nl, Ni+ei, Nj+ej, Nk+ek)->magField(AxisNo);
             B2 = cell(Nl, Ni-ei, Nj-ej, Nk-ek)->magField(AxisNo);
-            modB += (B1 + B2)/dx;
-			divB += (B1-B2)/dx;
+
+			divB += (B1-B2)/(dx);
+			dif  *= dx;
         }
-        modB += 1.120e-13;
+
+        modB    = ThisCell.velocity(1)*ThisCell.velocity(1)
+                + ThisCell.velocity(2)*ThisCell.velocity(2)
+                + ThisCell.velocity(3)*ThisCell.velocity(3);
+        modB = sqrt(modB);
+        //modB += 1.120e-13;
         DIVBMax = Max(DIVBMax,Abs(0.5*divB));
-	    DIVB    = DIVBMax/modB;
+        DIVB    = Max(DIVB,dif*Abs(divB)/modB);
+        //DIVB    = dif*Abs(divB)/modB;
+	    //DIVB    = DIVBMax/modB;
 	}
 }
 /*
