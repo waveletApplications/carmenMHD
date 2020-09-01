@@ -305,6 +305,7 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
 	real Bx1=0., Bx2=0.;
     real Bx =0., By=0., Bz=0.;
     real aux=0.;
+    real mod=0.;
 
 	if (Dimension == 1){
         dx = (XMax[1]-XMin[1])/n;
@@ -328,7 +329,13 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
         Bz  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k,3,n),3);
 
         aux = ((Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy));
-        Div = dx*dy*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
+        mod = sqrt(Bx*Bx+By*By+Bz*Bz);
+        //if(mod > 0.0e-20)
+            Div = dx*dy*(Abs(aux)/mod);
+        //else
+          //  Div = 0.0;
+        if(isnan(Div))
+            Div = 0.0;
        // Div = Max(Abs(dx),Abs(dy))*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
 
 	}else if (Dimension == 3){
@@ -348,7 +355,13 @@ real PrintGrid::vorticity(const int i, const int j, const int k) const
         Bz  = magField(BC(i  ,1,n), BC(j  ,2,n),BC(k  ,3,n),3);
 
         aux = (Bx2-Bx1)/(2.*dx) + (By2-By1)/(2.*dy) + (Bz2-Bz1)/(2.*dz);
-        Div = dx*dy*dz*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
+        mod = sqrt(Bx*Bx+By*By+Bz*Bz);
+        //if(mod > 0.0e-20)
+            Div = dx*dy*dz*(Abs(aux)/mod);
+        //else
+        if(isnan(Div))
+            Div = 0.0;
+
         //Div = Max(Abs(dx),Max(Abs(dy),Abs(dz)))*(Abs(aux)/sqrt(Bx*Bx+By*By+Bz*Bz));
 
 

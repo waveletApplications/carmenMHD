@@ -228,8 +228,9 @@ int main(int argc, char *argv[])
         EigenvalueX = 0.;
         EigenvalueY = 0.;
         EigenvalueZ = 0.;
-        DIVBMax = 0.;
 
+        DIVBMax             = 0.;
+        DIVB                = 0.;
 		// --- Time evolution procedure ---
 		if (Multiresolution)
 			TimeEvolution(Mesh);

@@ -968,7 +968,7 @@ void FineMesh::computeIntegral()
 
 	int	n=0;			// cell number
 	int 	AxisNo;			// Counter on dimension
-	real	dx=0., dy=0., dz=0., dif=1;	// Cell size
+	real	dx=0., dy=0., dz=0., dx2=0;	// Cell size
 	Vector 	Center(Dimension);  	// local center of the flame ball
 	real 	VelocityMax=0.;		// local maximum of the velocity
     real    divB=0;
@@ -978,6 +978,7 @@ void FineMesh::computeIntegral()
     real    modB=0.;
 	real    MaxSpeed;
 	real    QuantityNo=0.;
+	real    bx=0.,by=0.,bz=0.;
 
 	int 	ei=0, ej=0, ek=0;	// 1 if this direction is chosen, 0 elsewhere
 	int 	i=0, j=0, k=0;		// Counter on children
@@ -985,13 +986,14 @@ void FineMesh::computeIntegral()
 	// --- Init ---
 
 	// Init integral values
-
+   // DIVBMax             = 0.;
+  //  DIVB                = 0.;
 	FlameVelocity 		= 0.;
 	GlobalMomentum 		= 0.;
 	GlobalEnergy		= 0.;
 	GlobalEnstrophy		= 0.;
 	ExactMomentum   	= 0.;
-	ExactEnergy		= 0.;
+	ExactEnergy		    = 0.;
 
 	GlobalReactionRate	= 0.;
 	AverageRadius		= 0.;
@@ -1059,42 +1061,41 @@ void FineMesh::computeIntegral()
 
 			EigenvalueMax = Max (EigenvalueMax, VelocityMax);
 
-            for (AxisNo = 1; AxisNo <= Dimension; AxisNo ++)
-			{
 
+            divB = 0.;
+            for (AxisNo = 1; AxisNo <= Dimension; AxisNo++)
+			{
 				ei = (AxisNo == 1)? 1:0;
 				ej = (AxisNo == 2)? 1:0;
 				ek = (AxisNo == 3)? 1:0;
 
-                dx = cell(n)->size(AxisNo);
-               // dx *= 2.;
+                dx2  = cell(n)->size(AxisNo);
+                dx2 *= 2.;
 
                 B1 = cell(i+ei,j+ej,k+ek)->magField(AxisNo);
   				B2 = cell(i-ei,j-ej,k-ek)->magField(AxisNo);
 
-  				//modB += (B1 + B2)/dx;
-  				//modB  = B*B;
-  				divB += (B1-B2)/dx;
-  				dif  *= dx;
+  				divB += (B1-B2)/(dx2);
 
             }
 
-            modB    = cell(n)->magField(1)*cell(n)->magField(1)
-                    + cell(n)->magField(2)*cell(n)->magField(2)
-                    + cell(n)->magField(3)*cell(n)->magField(3);
+            modB    = (cell(n)->magField(1))*(cell(n)->magField(1))
+                    + (cell(n)->magField(2))*(cell(n)->magField(2))
+                    + (cell(n)->magField(3))*(cell(n)->magField(3));
+
             modB    = sqrt(modB);
-            DIVBMax = Max(DIVBMax,Abs(0.5*divB));
-            DIVB    = Max(DIVB,dif*Abs(divB)/modB);
-            //DIVB   += dx*dy*dz*dif*Abs(divB)/modB;
-            //modB += 1.120e-13;
-            //DIVBMax = Max(DIVBMax,0.5*Abs(divB));
-            //DIVB    = DIVBMax/modB;
+
+            DIVBMax = Max(Abs(DIVBMax),Abs(divB));
+
+            DIVB    = Max(Abs(DIVB),dx*dy*dz*Abs(divB)/modB);
+
+            if(isnan(DIVB)) DIVB    = 0.0;
 
 		}
 
 	// --- End loop on all cells ---
 
-  ReduceIntegralValues();
+  //ReduceIntegralValues();
 }
 
 /*
@@ -1623,7 +1624,7 @@ void FineMesh::writeAverage(const char* FileName)
                         fprintf(output, "\n");
                     }
 
-                    fprintf(output, "\n\nSCALARS DivBnorm float\nLOOKUP_TABLE default\n");
+                    fprintf(output, "\n\nSCALARS DivB2 float\nLOOKUP_TABLE default\n");
   					for (n=0; n < (1<<(Dimension*ScaleNb)); n++){
                         switch(Dimension)
                         {
@@ -1644,9 +1645,10 @@ void FineMesh::writeAverage(const char* FileName)
                                 i =  n/(1<<(2*ScaleNb));
                                 break;
                         };
-                        real divB=0, B1=0., B2=0.,dx=0.;
+                        real divB=0, B1=0., B2=0.,dx=0.,B=0., dx2=1;
                         real mod=0.;
                         int ei=0,ej=0,ek=0;
+
                         for (int AxisNo = 1; AxisNo <= Dimension; AxisNo ++)
                         {
 
@@ -1655,16 +1657,24 @@ void FineMesh::writeAverage(const char* FileName)
                             ek = (AxisNo == 3)? 1:0;
 
                             dx = cell(i,j,k)->size(AxisNo);
+                            dx2 *= dx;
                             dx *= 2.;
 
                             B1 = cell(i+ei, j+ej, k+ek)->magField(AxisNo);
                             B2 = cell(i-ei, j-ej, k-ek)->magField(AxisNo);
 
                             divB += (B1-B2)/dx;
-                            mod  += (Abs(B1)+Abs(B2))/dx;
                         }
-                        mod += 2.240e-13;
-                        divB = divB/mod;
+                        mod = cell(i,j,k)->magField(1)*cell(i,j,k)->magField(1)
+                            + cell(i,j,k)->magField(2)*cell(i,j,k)->magField(2)
+                            + cell(i,j,k)->magField(3)*cell(i,j,k)->magField(3);
+                        mod = sqrt(mod);
+                        //if(mod > 0.0e-20)
+                            divB = dx2*abs(divB)/mod;
+                        //else
+                        if(isnan(divB))
+                            divB = 0.0;
+
                         FileWrite(output, FORMAT, divB);
                         fprintf(output, "\n");
                     }

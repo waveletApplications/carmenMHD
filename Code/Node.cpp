@@ -2686,7 +2686,7 @@ void Node::computeIntegral()
   int 	QuantityNo;			// Quantity number (0 to QuantityNb)
 	int	n;				// Counter on children
 	int 	AxisNo;				// Counter on dimension
-	real 	dx, dy=0., dz=0., dif=1;		// Cell size
+	real 	dx, dy=0., dz=0., dif=1,dx2=0.0;		// Cell size
 	Vector 	Center(Dimension);  		// local center of the flame ball
 	real 	VelocityMax;			// local maximum of the velocity
 	real    MaxSpeed;
@@ -2722,7 +2722,7 @@ void Node::computeIntegral()
 		}
 
 		// Init integral values
-//		DIVB = 0.;
+        //DIVB = 0.;
 		//DIVBMax = 0.;
 		FlameVelocity	= 0.;
 		GlobalMomentum	= 0.;
@@ -2811,7 +2811,7 @@ void Node::computeIntegral()
 
 		EigenvalueMax = Max (EigenvalueMax, VelocityMax);
 
-
+        divB = 0.;
 
         for (AxisNo = 1; AxisNo <= Dimension; AxisNo++)
 		{
@@ -2819,27 +2819,35 @@ void Node::computeIntegral()
 			ej = (AxisNo == 2)? 1:0;
 			ek = (AxisNo == 3)? 1:0;
 
-            dx = ThisCell.size(AxisNo);
-            //dx *= 2.;
+            dx2  = ThisCell.size(AxisNo);
+            dx2 *= 2.;
 
             B1 = cell(Nl, Ni+ei, Nj+ej, Nk+ek)->magField(AxisNo);
             B2 = cell(Nl, Ni-ei, Nj-ej, Nk-ek)->magField(AxisNo);
 
-			divB += (B1-B2)/(dx);
-			dif  *= dx;
+			divB += (B1-B2)/(dx2);
+
         }
 
-        modB    = ThisCell.velocity(1)*ThisCell.velocity(1)
-                + ThisCell.velocity(2)*ThisCell.velocity(2)
-                + ThisCell.velocity(3)*ThisCell.velocity(3);
-        modB = sqrt(modB);
-        //modB += 1.120e-13;
-        DIVBMax = Max(DIVBMax,Abs(0.5*divB));
-        DIVB    = Max(DIVB,dif*Abs(divB)/modB);
-        //DIVB    = dif*Abs(divB)/modB;
-	    //DIVB    = DIVBMax/modB;
+        modB    = ThisCell.magField(1)*ThisCell.magField(1)
+                + ThisCell.magField(2)*ThisCell.magField(2)
+                + ThisCell.magField(3)*ThisCell.magField(3);
+
+        modB    = sqrt(modB);
+
+        DIVBMax = Max(Abs(DIVBMax),Abs(divB));
+
+        DIVB    = Max(abs(DIVB),dx*dy*dz*Abs(divB)/modB);
+
+        if(isnan(DIVB)) DIVB = 0.0;
+
 	}
+
+
+
+
 }
+
 /*
 ______________________________________________________________________________________________
 
